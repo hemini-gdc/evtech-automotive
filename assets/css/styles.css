@@ -107,7 +107,8 @@ h2 span {
 }
 
 .btn-secondary {
-    background-color: #25d366; /* WhatsApp Green */
+    background-color: #25d366;
+    /* WhatsApp Green */
     color: var(--white);
 }
 
@@ -147,7 +148,7 @@ h2 span {
 header {
     padding: 0;
     background: var(--white);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -215,7 +216,7 @@ header .btn-primary {
     transform: translateX(-50%) translateY(15px);
     background-color: var(--white);
     min-width: 180px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     padding: 10px 0;
     opacity: 0;
@@ -275,7 +276,8 @@ header .btn-primary {
     line-height: 1;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-links a:hover,
+.nav-links a.active {
     color: var(--primary-color);
 }
 
@@ -372,6 +374,7 @@ header .btn-primary {
     0% {
         box-shadow: 0 0 5px rgba(140, 198, 63, 0.2);
     }
+
     100% {
         box-shadow: 0 0 15px rgba(140, 198, 63, 0.45);
     }
@@ -627,7 +630,8 @@ header .btn-primary {
     z-index: 1;
 }
 
-.adv-left, .adv-right {
+.adv-left,
+.adv-right {
     flex: 1;
 }
 
@@ -763,10 +767,25 @@ header .btn-primary {
     height: 44px;
 }
 
-.ev-orbit-1 { top: 0; left: calc(50% - 22px); }
-.ev-orbit-2 { top: calc(50% - 22px); right: 0; }
-.ev-orbit-3 { bottom: 28px; left: calc(50% - 22px); }
-.ev-orbit-4 { top: calc(50% - 22px); left: 0; }
+.ev-orbit-1 {
+    top: 0;
+    left: calc(50% - 22px);
+}
+
+.ev-orbit-2 {
+    top: calc(50% - 22px);
+    right: 0;
+}
+
+.ev-orbit-3 {
+    bottom: 28px;
+    left: calc(50% - 22px);
+}
+
+.ev-orbit-4 {
+    top: calc(50% - 22px);
+    left: 0;
+}
 
 .ev-orbit-icon {
     width: 44px;
@@ -798,13 +817,25 @@ header .btn-primary {
 }
 
 @keyframes ev-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes ev-pulse {
-    0%, 100% { box-shadow: 0 15px 40px rgba(140, 198, 63, 0.4); }
-    50% { box-shadow: 0 15px 50px rgba(140, 198, 63, 0.6); }
+
+    0%,
+    100% {
+        box-shadow: 0 15px 40px rgba(140, 198, 63, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 15px 50px rgba(140, 198, 63, 0.6);
+    }
 }
 
 /* Testimonials */
@@ -1155,42 +1186,44 @@ footer h3::after {
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .about-grid, .footer-grid {
+
+    .about-grid,
+    .footer-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .hero {
         padding: 80px 0;
     }
-    
+
     .hero-content {
         justify-content: flex-start;
         min-height: 400px;
     }
-    
+
     .hero-text {
         text-align: left;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .hero-text h1 {
         font-size: 48px;
     }
-    
+
     .hero-btns {
         justify-content: flex-start;
     }
-    
+
     .about-image {
         order: 2;
     }
-    
+
     .advantages-layout {
         flex-direction: column;
     }
-    
+
     .adv-center {
         order: -1;
         max-width: 400px;
@@ -1206,7 +1239,7 @@ footer h3::after {
     .adv-right .adv-item.animate-in {
         transform: translateX(0);
     }
-    
+
     .cta-content {
         flex-direction: column;
         text-align: center;
@@ -1232,7 +1265,7 @@ footer h3::after {
         left: 0;
         width: 100%;
         background-color: var(--white);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
         padding: 20px;
         z-index: 999;
     }
@@ -1280,11 +1313,11 @@ footer h3::after {
     .nav-actions {
         display: none;
     }
-    
+
     .mobile-menu-btn {
         display: block;
     }
-    
+
     .services-grid {
         grid-template-columns: 1fr;
     }
@@ -1333,12 +1366,12 @@ footer h3::after {
     .ev-hub-core .fa-charging-station {
         font-size: 22px;
     }
-    
+
     .top-bar-content {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .footer-bottom {
         flex-direction: column;
         gap: 20px;
