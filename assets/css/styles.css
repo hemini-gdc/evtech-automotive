@@ -433,11 +433,49 @@ header .btn-primary {
     position: relative;
     border-radius: 32px;
     padding: 3px;
-    background: var(--primary-color);
-    box-shadow:
-        0 0 18px rgba(140, 198, 63, 0.7),
-        0 0 36px rgba(140, 198, 63, 0.45),
-        0 0 56px rgba(140, 198, 63, 0.25);
+    background: transparent;
+    isolation: isolate;
+}
+
+.about-image:has(.experience-card)::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 35px;
+    background: conic-gradient(
+        from var(--angle, 0deg),
+        transparent 0deg,
+        transparent 60deg,
+        rgba(140, 198, 63, 0.15) 90deg,
+        rgba(140, 198, 63, 0.6) 140deg,
+        #8cc63f 180deg,
+        rgba(140, 198, 63, 0.6) 220deg,
+        rgba(140, 198, 63, 0.15) 270deg,
+        transparent 300deg,
+        transparent 360deg
+    );
+    animation: border-spin 3s linear infinite;
+    z-index: -1;
+}
+
+.about-image:has(.experience-card)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 32px;
+    background: var(--white);
+    z-index: -1;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes border-spin {
+    from { --angle: 0deg; }
+    to   { --angle: 360deg; }
 }
 
 .about-image {
