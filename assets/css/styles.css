@@ -440,22 +440,23 @@ header .btn-primary {
 .about-image:has(.experience-card)::before {
     content: '';
     position: absolute;
-    inset: -3px;
-    border-radius: 35px;
+    inset: -4px;
+    border-radius: 36px;
     background: conic-gradient(
         from var(--angle, 0deg),
         transparent 0deg,
-        transparent 60deg,
-        rgba(140, 198, 63, 0.15) 90deg,
-        rgba(140, 198, 63, 0.6) 140deg,
-        #8cc63f 180deg,
-        rgba(140, 198, 63, 0.6) 220deg,
-        rgba(140, 198, 63, 0.15) 270deg,
-        transparent 300deg,
+        transparent 75deg,
+        rgba(140, 198, 63, 0.3) 88deg,
+        rgba(180, 255, 80, 0.95) 96deg,
+        #ffffff 100deg,
+        rgba(180, 255, 80, 0.95) 104deg,
+        rgba(140, 198, 63, 0.3) 112deg,
+        transparent 125deg,
         transparent 360deg
     );
-    animation: border-spin 3s linear infinite;
+    animation: border-spin 6s linear infinite reverse;
     z-index: -1;
+    filter: blur(1px);
 }
 
 .about-image:has(.experience-card)::after {
@@ -465,6 +466,9 @@ header .btn-primary {
     border-radius: 32px;
     background: var(--white);
     z-index: -1;
+    box-shadow:
+        0 0 0 1px rgba(140, 198, 63, 0.25),
+        0 0 20px rgba(140, 198, 63, 0.15);
 }
 
 @property --angle {
