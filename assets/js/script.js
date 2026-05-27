@@ -1,4 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const footerMount = document.getElementById('site-footer');
+    const existingFooter = document.querySelector('footer');
+    if (footerMount || existingFooter) {
+        fetch('footer.html')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to load footer');
+                }
+                return response.text();
+            })
+            .then((html) => {
+                if (footerMount) {
+                    footerMount.innerHTML = html;
+                } else if (existingFooter) {
+                    existingFooter.outerHTML = html;
+                }
+            })
+            .catch(() => {
+                // Keep page usable even if footer include fails
+            });
+    }
+
     // Sticky Header
     const header = document.querySelector('header');
     window.addEventListener('scroll', () => {
