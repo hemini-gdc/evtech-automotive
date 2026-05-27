@@ -440,23 +440,25 @@ header .btn-primary {
 .about-image:has(.experience-card)::before {
     content: '';
     position: absolute;
-    inset: -4px;
+    inset: -5px;
     border-radius: 36px;
     background: conic-gradient(
         from var(--angle, 0deg),
         transparent 0deg,
-        transparent 75deg,
-        rgba(140, 198, 63, 0.3) 88deg,
-        rgba(180, 255, 80, 0.95) 96deg,
-        #ffffff 100deg,
-        rgba(180, 255, 80, 0.95) 104deg,
-        rgba(140, 198, 63, 0.3) 112deg,
-        transparent 125deg,
+        transparent 55deg,
+        rgba(140, 198, 63, 0.25) 70deg,
+        rgba(140, 198, 63, 0.55) 95deg,
+        rgba(180, 255, 80, 1) 115deg,
+        #ffffff 125deg,
+        rgba(180, 255, 80, 1) 135deg,
+        rgba(140, 198, 63, 0.55) 160deg,
+        rgba(140, 198, 63, 0.25) 175deg,
+        transparent 190deg,
         transparent 360deg
     );
-    animation: border-spin 6s linear infinite reverse;
+    animation: border-spin 12s linear infinite reverse;
     z-index: -1;
-    filter: blur(1px);
+    filter: blur(0.5px);
 }
 
 .about-image:has(.experience-card)::after {
@@ -467,8 +469,8 @@ header .btn-primary {
     background: var(--white);
     z-index: -1;
     box-shadow:
-        0 0 0 1px rgba(140, 198, 63, 0.25),
-        0 0 20px rgba(140, 198, 63, 0.15);
+        0 0 0 1px rgba(140, 198, 63, 0.45),
+        0 0 26px rgba(140, 198, 63, 0.28);
 }
 
 @property --angle {
@@ -1104,7 +1106,7 @@ header .btn-primary {
 
 /* Footer */
 footer {
-    background-color: var(--secondary-color);
+    background-color: #000;
     color: #aaa;
     padding: 50px 0 25px;
 }
@@ -1152,7 +1154,7 @@ footer h3::after {
 .footer-social a {
     width: 40px;
     height: 40px;
-    background: #333;
+    background: #1f1f1f;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1191,7 +1193,7 @@ footer h3::after {
 .footer-newsletter input {
     width: 100%;
     padding: 15px 20px;
-    background: #333;
+    background: #1f1f1f;
     border: none;
     border-radius: 50px;
     color: white;
@@ -1211,7 +1213,7 @@ footer h3::after {
 }
 
 .footer-bottom {
-    border-top: 1px solid #333;
+    border-top: 1px solid #1f1f1f;
     padding-top: 20px;
     display: flex;
     justify-content: space-between;
