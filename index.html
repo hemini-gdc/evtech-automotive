@@ -18,9 +18,10 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/theme-dark.css">
 </head>
 
-<body>
+<body class="theme-dark">
 
 
     <!-- Header / Nav -->
@@ -29,7 +30,7 @@
             <nav>
                 <div class="logo">
                     <a href="index.html">
-                        <img src="assets/images/logo.png" alt="EVtech Automotive Logo" class="logo-img">
+                        <img src="assets/images/logo-footer.png" alt="EVtech Automotive Logo" class="logo-img">
                     </a>
                 </div>
                 <ul class="nav-links">
@@ -171,68 +172,46 @@
     </section>
 
     <!-- Advantages Section -->
-    <section class="advantages section-padding">
+    <section class="advantages section-padding bg-light">
         <div class="container">
-            <div class="section-header">
-                <span class="sub-title">WHY CHOOSE US</span>
-                <h2>What Advantages Will You Get <span>Using EVtech</span>?</h2>
+            <div class="advantages-header">
+                <h2 class="advantages-title">Why <span>Choose Us</span></h2>
+                <p class="advantages-intro">We deliver specialist EV and hybrid servicing across New Zealand — from high-voltage battery repair and ECU programming to certified diagnostics you can trust.</p>
             </div>
 
-            <div class="advantages-layout">
-                <div class="adv-left">
-                    <div class="adv-item">
-                        <div class="adv-icon"><i class="fas fa-microchip"></i></div>
-                        <div class="adv-text">
-                            <h3>Advanced Coding</h3>
-                            <p>Cutting-edge ECU programming and software updates for modern EV systems.</p>
-                        </div>
+            <div class="advantages-showcase">
+                <article class="advantage-card advantage-card--hero">
+                    <div class="advantage-card-content">
+                        <h3>Advanced Coding</h3>
+                        <p>Cutting-edge ECU programming and software updates for modern EV systems.</p>
                     </div>
-                    <div class="adv-item">
-                        <div class="adv-icon"><i class="fas fa-car-battery"></i></div>
-                        <div class="adv-text">
+                    <img class="advantage-car advantage-car--hero" src="assets/images/advantage-car-coding.png?v=2" alt="" width="640" height="400" loading="lazy" decoding="async">
+                </article>
+
+                <div class="advantages-showcase-stack">
+                    <article class="advantage-card advantage-card--top-car">
+                        <img class="advantage-car advantage-car--top" src="assets/images/advantage-car-battery.png?v=2" alt="" width="480" height="280" loading="lazy" decoding="async">
+                        <div class="advantage-card-content">
                             <h3>Battery Experts</h3>
                             <p>New Zealand's leading specialists in hybrid and EV battery repair.</p>
                         </div>
-                    </div>
-                </div>
+                    </article>
 
-                <div class="adv-center">
-                    <div class="ev-hub">
-                        <div class="ev-hub-ring ev-hub-ring-1"></div>
-                        <div class="ev-hub-ring ev-hub-ring-2"></div>
-                        <div class="ev-hub-core">
-                            <i class="fas fa-bolt"></i>
-                            <i class="fas fa-charging-station"></i>
-                        </div>
-                        <div class="ev-hub-orbit">
-                            <div class="ev-orbit-slot ev-orbit-1"><span class="ev-orbit-icon"><i
-                                        class="fas fa-plug"></i></span></div>
-                            <div class="ev-orbit-slot ev-orbit-2"><span class="ev-orbit-icon"><i
-                                        class="fas fa-leaf"></i></span></div>
-                            <div class="ev-orbit-slot ev-orbit-3"><span class="ev-orbit-icon"><i
-                                        class="fas fa-gauge-high"></i></span></div>
-                            <div class="ev-orbit-slot ev-orbit-4"><span class="ev-orbit-icon"><i
-                                        class="fas fa-shield-halved"></i></span></div>
-                        </div>
-                        <p class="ev-hub-label">EV & Hybrid Specialists</p>
-                    </div>
-                </div>
-
-                <div class="adv-right">
-                    <div class="adv-item">
-                        <div class="adv-icon"><i class="fas fa-location-dot"></i></div>
-                        <div class="adv-text">
+                    <article class="advantage-card">
+                        <div class="advantage-card-content">
                             <h3>16+ Locations</h3>
                             <p>Convenient EV service centres across New Zealand.</p>
                         </div>
-                    </div>
-                    <div class="adv-item">
-                        <div class="adv-icon"><i class="fas fa-certificate"></i></div>
-                        <div class="adv-text">
+                        <img class="advantage-car" src="assets/images/advantage-car-locations.png?v=2" alt="" width="480" height="280" loading="lazy" decoding="async">
+                    </article>
+
+                    <article class="advantage-card">
+                        <div class="advantage-card-content">
                             <h3>Master Techs</h3>
                             <p>Level 5 certified technicians for all major EV & luxury brands.</p>
                         </div>
-                    </div>
+                        <img class="advantage-car" src="assets/images/advantage-car-techs.png?v=2" alt="" width="480" height="280" loading="lazy" decoding="async">
+                    </article>
                 </div>
             </div>
         </div>

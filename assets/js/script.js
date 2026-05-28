@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    document.querySelectorAll('.service-card, .adv-item, .about-content, .ev-hub').forEach(el => {
+    document.querySelectorAll('.service-card, .advantage-card, .about-content').forEach(el => {
         observer.observe(el);
     });
 

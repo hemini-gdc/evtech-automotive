@@ -11,6 +11,7 @@
     --container-width: 1200px;
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     --border-radius: 12px;
+    --testimonial-card-height: 400px;
 }
 
 * {
@@ -167,20 +168,20 @@ nav {
     display: flex;
     align-items: center;
     height: 100%;
+    max-height: 100px;
     font-size: 28px;
     font-weight: 800;
-    overflow: visible;
+    overflow: hidden;
     flex-shrink: 0;
 }
 
 header .logo-img {
-    height: 100px;
-    max-height: 100px;
+    height: 80px;
+    max-height: 80px;
     width: auto;
     display: block;
     object-fit: contain;
-    transform: scale(1.4);
-    transform-origin: left center;
+    object-position: left center;
 }
 
 header .btn-primary {
@@ -440,25 +441,25 @@ header .btn-primary {
 .about-image:has(.experience-card)::before {
     content: '';
     position: absolute;
-    inset: -5px;
-    border-radius: 36px;
+    inset: -3px;
+    border-radius: 34px;
     background: conic-gradient(
         from var(--angle, 0deg),
         transparent 0deg,
-        transparent 55deg,
-        rgba(140, 198, 63, 0.25) 70deg,
-        rgba(140, 198, 63, 0.55) 95deg,
-        rgba(180, 255, 80, 1) 115deg,
-        #ffffff 125deg,
-        rgba(180, 255, 80, 1) 135deg,
-        rgba(140, 198, 63, 0.55) 160deg,
-        rgba(140, 198, 63, 0.25) 175deg,
-        transparent 190deg,
+        transparent 50deg,
+        rgba(140, 198, 63, 0.22) 70deg,
+        rgba(140, 198, 63, 0.5) 95deg,
+        #a8d96a 108deg,
+        var(--primary-color) 118deg,
+        #a8d96a 128deg,
+        rgba(140, 198, 63, 0.5) 145deg,
+        rgba(140, 198, 63, 0.22) 165deg,
+        transparent 185deg,
         transparent 360deg
     );
-    animation: border-spin 12s linear infinite reverse;
+    animation: border-spin 8s linear infinite reverse;
     z-index: -1;
-    filter: blur(0.5px);
+    filter: blur(4px);
 }
 
 .about-image:has(.experience-card)::after {
@@ -468,9 +469,6 @@ header .btn-primary {
     border-radius: 32px;
     background: var(--white);
     z-index: -1;
-    box-shadow:
-        0 0 0 1px rgba(140, 198, 63, 0.45),
-        0 0 26px rgba(140, 198, 63, 0.28);
 }
 
 @property --angle {
@@ -648,238 +646,164 @@ header .btn-primary {
 
 /* Advantages Section */
 .advantages {
-    background: linear-gradient(180deg, var(--white) 0%, #f4f9ee 100%);
-    position: relative;
-    overflow: hidden;
+    background: var(--bg-light);
 }
 
-.advantages::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(140, 198, 63, 0.08) 0%, transparent 70%);
-    pointer-events: none;
+.advantages-header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 48px;
 }
 
-.advantages-layout {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-    position: relative;
-    z-index: 1;
-}
-
-.adv-left,
-.adv-right {
-    flex: 1;
-}
-
-.adv-item {
-    display: flex;
-    margin-bottom: 40px;
-    gap: 20px;
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.adv-right .adv-item {
-    flex-direction: row-reverse;
-    text-align: right;
-    transform: translateX(30px);
-}
-
-.adv-item.animate-in {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.adv-icon {
-    width: 70px;
-    height: 70px;
-    background: var(--white);
-    border: 2px solid rgba(140, 198, 63, 0.25);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    color: var(--primary-color);
-    flex-shrink: 0;
-    transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(140, 198, 63, 0.15);
-}
-
-.adv-item:hover .adv-icon {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: var(--white);
-    transform: scale(1.08);
-}
-
-.adv-text h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
+.advantages-title {
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 1.15;
     color: var(--secondary-color);
+    margin-bottom: 18px;
 }
 
-.adv-center {
-    flex: 0.9;
-    display: flex;
-    justify-content: center;
+.advantages-title span {
+    color: var(--primary-color);
 }
 
-/* EV Hub Center Graphic */
-.ev-hub {
-    position: relative;
-    width: 320px;
-    height: 320px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.advantages-intro {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-light);
+    margin: 0;
+}
+
+.advantages-showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 20px;
+    max-width: 1140px;
     margin: 0 auto;
-    opacity: 0;
-    transform: scale(0.85);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    align-items: stretch;
 }
 
-.ev-hub.animate-in {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.ev-hub-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 2px dashed rgba(140, 198, 63, 0.35);
-}
-
-.ev-hub-ring-1 {
-    width: 100%;
-    height: 100%;
-    animation: ev-spin 25s linear infinite;
-}
-
-.ev-hub-ring-2 {
-    width: 75%;
-    height: 75%;
-    border-style: solid;
-    border-color: rgba(140, 198, 63, 0.2);
-    animation: ev-spin 18s linear infinite reverse;
-}
-
-.ev-hub-core {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+.advantages-showcase-stack {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: var(--white);
-    box-shadow: 0 15px 40px rgba(140, 198, 63, 0.4);
-    z-index: 2;
-    animation: ev-pulse 3s ease-in-out infinite;
+    gap: 20px;
+    min-height: 100%;
 }
 
-.ev-hub-core .fa-bolt {
-    font-size: 42px;
-}
-
-.ev-hub-core .fa-charging-station {
-    font-size: 28px;
-    opacity: 0.9;
-}
-
-.ev-hub-orbit {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    animation: ev-spin 24s linear infinite;
-}
-
-.ev-orbit-slot {
-    position: absolute;
-    width: 44px;
-    height: 44px;
-}
-
-.ev-orbit-1 {
-    top: 0;
-    left: calc(50% - 22px);
-}
-
-.ev-orbit-2 {
-    top: calc(50% - 22px);
-    right: 0;
-}
-
-.ev-orbit-3 {
-    bottom: 28px;
-    left: calc(50% - 22px);
-}
-
-.ev-orbit-4 {
-    top: calc(50% - 22px);
-    left: 0;
-}
-
-.ev-orbit-icon {
-    width: 44px;
-    height: 44px;
+.advantage-card {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    min-height: 200px;
+    padding: 32px 28px 0;
+    border: 1px solid rgba(140, 198, 63, 0.35);
     background: var(--white);
-    border: 2px solid rgba(140, 198, 63, 0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color);
-    font-size: 16px;
     box-shadow: var(--shadow);
-    animation: ev-spin 24s linear infinite reverse;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.4s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
-.ev-hub-label {
+.advantage-card::before {
+    content: '';
     position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 13px;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 85% 65% at 18% 12%, rgba(140, 198, 63, 0.32) 0%, transparent 52%),
+        radial-gradient(ellipse 110% 95% at 50% 100%, #e4f3d4 0%, #f2fae8 42%, var(--white) 100%);
+}
+
+.advantage-card--hero {
+    min-height: 100%;
+    padding-bottom: 42%;
+}
+
+.advantages-showcase-stack .advantage-card {
+    flex: 1;
+    min-height: 0;
+}
+
+.advantage-card--top-car {
+    padding-top: 38%;
+}
+
+.advantage-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.advantage-card--hero.animate-in { transition-delay: 0.05s; }
+.advantages-showcase-stack .advantage-card:nth-child(1).animate-in { transition-delay: 0.12s; }
+.advantages-showcase-stack .advantage-card:nth-child(2).animate-in { transition-delay: 0.2s; }
+.advantages-showcase-stack .advantage-card:nth-child(3).animate-in { transition-delay: 0.28s; }
+
+.advantage-card:hover {
+    border-color: rgba(140, 198, 63, 0.55);
+    box-shadow: 0 14px 36px rgba(140, 198, 63, 0.18);
+    transform: translateY(-3px);
+}
+
+.advantage-card-content {
+    position: relative;
+    z-index: 2;
+    max-width: 92%;
+}
+
+.advantage-card h3 {
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.18;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--primary-dark);
-    white-space: nowrap;
-    z-index: 3;
+    color: var(--secondary-color);
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
 }
 
-@keyframes ev-spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+.advantage-card--hero h3 {
+    font-size: clamp(26px, 3vw, 36px);
+    max-width: 14ch;
 }
 
-@keyframes ev-pulse {
+.advantage-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-light);
+    margin: 0;
+    max-width: 30ch;
+}
 
-    0%,
-    100% {
-        box-shadow: 0 15px 40px rgba(140, 198, 63, 0.4);
-    }
+.advantage-car {
+    position: absolute;
+    left: 50%;
+    bottom: -8%;
+    width: 108%;
+    max-width: none;
+    height: auto;
+    transform: translateX(-50%);
+    object-fit: contain;
+    object-position: bottom center;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.1));
+}
 
-    50% {
-        box-shadow: 0 15px 50px rgba(140, 198, 63, 0.6);
-    }
+.advantage-car--hero {
+    width: 118%;
+    bottom: -12%;
+}
+
+.advantage-car--top {
+    top: -6%;
+    bottom: auto;
+    width: 100%;
+    object-position: top center;
+}
+
+.advantage-card--top-car .advantage-card-content {
+    margin-top: auto;
+    padding-bottom: 28px;
 }
 
 /* Testimonials */
@@ -889,12 +813,24 @@ header .btn-primary {
 
 .testimonials-layout {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 60px;
-    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: stretch;
+}
+
+.testimonials-rating {
+    display: flex;
+    min-height: var(--testimonial-card-height);
 }
 
 .google-rating-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: var(--testimonial-card-height);
     background: var(--white);
     border-radius: var(--border-radius);
     padding: 40px;
@@ -945,40 +881,40 @@ header .btn-primary {
 
 .testimonials-slider {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    height: var(--testimonial-card-height);
     background: var(--white);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    padding: 50px 70px 60px;
-    min-height: 380px;
+    padding: 40px 70px 24px;
+    box-sizing: border-box;
 }
 
 .testimonial-slides {
     position: relative;
-    min-height: 280px;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
 }
 
 .testimonial-slide {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     text-align: center;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease;
-    padding: 10px 20px;
-    min-height: 280px;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .testimonial-slide.active {
     opacity: 1;
     visibility: visible;
-    position: relative;
 }
 
 .slide-avatar {
@@ -996,8 +932,14 @@ header .btn-primary {
 }
 
 .slide-content {
-    margin-top: auto;
-    padding-top: 30px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 0;
+    padding-top: 24px;
 }
 
 .slide-quote {
@@ -1006,8 +948,15 @@ header .btn-primary {
     color: var(--text-color);
     font-style: italic;
     max-width: 520px;
+    width: 100%;
+    min-height: 162px;
+    max-height: 162px;
     margin: 0 auto 16px;
     border: none;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .slide-author {
@@ -1016,6 +965,8 @@ header .btn-primary {
     color: var(--secondary-color);
     font-style: normal;
     display: block;
+    flex-shrink: 0;
+    min-height: 24px;
 }
 
 .slider-btn {
@@ -1054,7 +1005,9 @@ header .btn-primary {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 25px;
+    flex-shrink: 0;
+    margin-top: auto;
+    padding-top: 16px;
 }
 
 .slider-dot {
@@ -1264,24 +1217,19 @@ footer h3::after {
         order: 2;
     }
 
-    .advantages-layout {
-        flex-direction: column;
-    }
-
-    .adv-center {
-        order: -1;
+    .advantages-showcase {
+        grid-template-columns: 1fr;
         max-width: 400px;
-        margin-bottom: 20px;
     }
 
-    .adv-right .adv-item {
-        flex-direction: row;
-        text-align: left;
-        transform: translateX(30px);
+    .advantage-card--hero {
+        min-height: 380px;
+        padding-bottom: 48%;
     }
 
-    .adv-right .adv-item.animate-in {
-        transform: translateX(0);
+    .advantage-card--top-car {
+        min-height: 300px;
+        padding-top: 42%;
     }
 
     .cta-content {
@@ -1292,11 +1240,17 @@ footer h3::after {
 
     .testimonials-layout {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 30px;
+        max-width: 560px;
+        margin: 0 auto;
+    }
+
+    .testimonials-rating {
+        min-height: var(--testimonial-card-height);
     }
 
     .testimonials-slider {
-        padding: 40px 55px 50px;
+        padding: 36px 55px 20px;
     }
 }
 
@@ -1366,9 +1320,18 @@ footer h3::after {
         grid-template-columns: 1fr;
     }
 
+    :root {
+        --testimonial-card-height: 380px;
+    }
+
     .testimonials-slider {
-        padding: 35px 20px 45px;
-        min-height: 340px;
+        padding: 32px 48px 20px;
+    }
+
+    .slide-quote {
+        font-size: 16px;
+        min-height: 144px;
+        max-height: 144px;
     }
 
     .slider-btn {
@@ -1391,24 +1354,6 @@ footer h3::after {
 
     .google-score {
         font-size: 56px;
-    }
-
-    .ev-hub {
-        width: 260px;
-        height: 260px;
-    }
-
-    .ev-hub-core {
-        width: 110px;
-        height: 110px;
-    }
-
-    .ev-hub-core .fa-bolt {
-        font-size: 34px;
-    }
-
-    .ev-hub-core .fa-charging-station {
-        font-size: 22px;
     }
 
     .top-bar-content {

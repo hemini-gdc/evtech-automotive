@@ -1,0 +1,474 @@
+/* ==========================================================================
+   EVtech Homepage — Premium Dark Theme Preview
+   Loaded only on index-dark.html (body.theme-dark)
+   ========================================================================== */
+
+body.theme-dark {
+    --dk-bg: #050806;
+    --dk-bg-soft: #0a0e0c;
+    --dk-surface: #101612;
+    --dk-surface-2: #161d18;
+    --dk-surface-glass: rgba(16, 22, 18, 0.85);
+    --dk-border: rgba(140, 198, 63, 0.14);
+    --dk-border-bright: rgba(140, 198, 63, 0.38);
+    --dk-text: #eef2ef;
+    --dk-text-muted: #8fa396;
+    --dk-glow: rgba(140, 198, 63, 0.25);
+    --dk-green-deep: #061a10;
+    --dk-green-mid: #0f3d24;
+    --dk-green-bright: #1a5c38;
+    --dk-gradient-page:
+        radial-gradient(ellipse 100% 60% at 50% -10%, rgba(140, 198, 63, 0.09) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 50% at 100% 50%, rgba(20, 80, 50, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 0% 80%, rgba(140, 198, 63, 0.05) 0%, transparent 45%),
+        linear-gradient(180deg, #080c0a 0%, #050806 50%, #030504 100%);
+    background: var(--dk-gradient-page);
+    background-attachment: fixed;
+    color: var(--dk-text-muted);
+}
+
+/* Header — glass + glow */
+body.theme-dark header {
+    background: linear-gradient(180deg, rgba(12, 18, 14, 0.95) 0%, rgba(8, 12, 10, 0.88) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--dk-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(140, 198, 63, 0.06) inset;
+}
+
+body.theme-dark header .logo-img {
+    height: 80px;
+    max-height: 80px;
+}
+
+body.theme-dark .nav-links a {
+    color: var(--dk-text);
+}
+
+body.theme-dark .nav-links a:hover,
+body.theme-dark .nav-links a.active {
+    color: var(--primary-color);
+    text-shadow: 0 0 20px var(--dk-glow);
+}
+
+body.theme-dark .search-btn {
+    color: var(--dk-text);
+}
+
+body.theme-dark header .btn-primary {
+    background: linear-gradient(135deg, #9ad44a 0%, var(--primary-color) 45%, #6fa82e 100%);
+    box-shadow: 0 4px 18px var(--dk-glow);
+}
+
+body.theme-dark header .btn-primary:hover {
+    box-shadow: 0 6px 28px rgba(140, 198, 63, 0.45);
+}
+
+body.theme-dark .dropdown-menu {
+    background: linear-gradient(165deg, #161d18 0%, #101612 100%);
+    border: 1px solid var(--dk-border-bright);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(140, 198, 63, 0.05) inset;
+}
+
+body.theme-dark .dropdown-menu::before {
+    border-color: transparent transparent #161d18 transparent;
+}
+
+body.theme-dark .dropdown-menu a {
+    color: var(--dk-text) !important;
+}
+
+body.theme-dark .dropdown-menu a:hover {
+    background: linear-gradient(90deg, rgba(140, 198, 63, 0.12) 0%, transparent 100%);
+    color: var(--primary-color) !important;
+}
+
+@media (max-width: 768px) {
+    body.theme-dark .nav-links {
+        background: linear-gradient(180deg, #121814 0%, #0a0e0c 100%);
+        border-top: 1px solid var(--dk-border);
+    }
+}
+
+/* Hero — cinematic overlay */
+body.theme-dark .hero {
+    background: #030504;
+}
+
+body.theme-dark .hero-video-overlay {
+    background:
+        linear-gradient(105deg, rgba(5, 12, 8, 0.92) 0%, rgba(5, 12, 8, 0.55) 45%, rgba(3, 8, 5, 0.75) 100%),
+        radial-gradient(ellipse 70% 80% at 20% 50%, rgba(140, 198, 63, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 90% 80%, rgba(20, 60, 40, 0.2) 0%, transparent 55%);
+}
+
+body.theme-dark .hero-badge {
+    background: linear-gradient(135deg, rgba(140, 198, 63, 0.18) 0%, rgba(140, 198, 63, 0.06) 100%);
+    border-color: var(--dk-border-bright);
+    box-shadow: 0 0 24px rgba(140, 198, 63, 0.15);
+}
+
+body.theme-dark .hero-text h1 span {
+    background: linear-gradient(135deg, #b8e86a 0%, var(--primary-color) 50%, #6fa82e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.theme-dark .btn-primary {
+    background: linear-gradient(135deg, #a8e055 0%, var(--primary-color) 40%, #6fa82e 100%);
+    box-shadow: 0 6px 24px var(--dk-glow);
+}
+
+body.theme-dark .btn-primary:hover {
+    box-shadow: 0 8px 32px rgba(140, 198, 63, 0.5);
+}
+
+body.theme-dark .btn-outline-white {
+    border-color: rgba(255, 255, 255, 0.35);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+body.theme-dark .btn-outline-white:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #e8f5e0 100%);
+    color: #0a0e0c;
+    box-shadow: 0 6px 24px rgba(255, 255, 255, 0.15);
+}
+
+/* Section backgrounds — layered depth */
+body.theme-dark .about {
+    background:
+        radial-gradient(ellipse 60% 40% at 0% 50%, rgba(140, 198, 63, 0.04) 0%, transparent 50%),
+        linear-gradient(180deg, #050806 0%, #080c0a 100%);
+}
+
+body.theme-dark .bg-light,
+body.theme-dark .services,
+body.theme-dark .testimonials {
+    background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(140, 198, 63, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, #0a0e0c 0%, #060908 100%);
+    position: relative;
+}
+
+body.theme-dark .advantages {
+    background:
+        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(20, 90, 55, 0.15) 0%, transparent 55%),
+        linear-gradient(180deg, #060908 0%, #030504 100%);
+}
+
+/* Section headings — premium accent */
+body.theme-dark .sub-title {
+    letter-spacing: 3px;
+    text-shadow: 0 0 30px var(--dk-glow);
+}
+
+body.theme-dark h2,
+body.theme-dark .advantages-title {
+    color: var(--dk-text);
+}
+
+body.theme-dark h2 span,
+body.theme-dark .advantages-title span {
+    background: linear-gradient(135deg, #c8f07a 0%, var(--primary-color) 45%, #6fa82e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.theme-dark .about-content p,
+body.theme-dark .service-info p,
+body.theme-dark .advantages-intro,
+body.theme-dark .google-rating-card p,
+body.theme-dark .slide-quote {
+    color: var(--dk-text-muted);
+}
+
+body.theme-dark .check-list li {
+    color: #d4ddd8;
+}
+
+body.theme-dark .check-list i {
+    filter: drop-shadow(0 0 8px var(--dk-glow));
+}
+
+/* About — glowing frame (brand green #8cc63f) */
+body.theme-dark .about-image:has(.experience-card)::before {
+    background: conic-gradient(
+        from var(--angle, 0deg),
+        transparent 0deg,
+        transparent 50deg,
+        rgba(140, 198, 63, 0.28) 70deg,
+        rgba(140, 198, 63, 0.65) 95deg,
+        #a8d96a 108deg,
+        var(--primary-color) 118deg,
+        #a8d96a 128deg,
+        rgba(140, 198, 63, 0.65) 145deg,
+        rgba(140, 198, 63, 0.28) 165deg,
+        transparent 185deg,
+        transparent 360deg
+    );
+    filter: blur(5px);
+}
+
+body.theme-dark .about-image:has(.experience-card)::after {
+    background: linear-gradient(165deg, #141a16 0%, #0c100e 100%);
+}
+
+body.theme-dark .experience-card {
+    background: linear-gradient(145deg, #a8d96a 0%, var(--primary-color) 50%, var(--primary-dark) 100%);
+    box-shadow: 0 12px 40px rgba(140, 198, 63, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+/* Service cards — gradient border + glass */
+body.theme-dark .service-card {
+    background: linear-gradient(165deg, #161d18 0%, #101612 100%);
+    border: 1px solid var(--dk-border);
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    position: relative;
+    overflow: hidden;
+}
+
+body.theme-dark .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(145deg, rgba(140, 198, 63, 0.35) 0%, transparent 40%, transparent 60%, rgba(140, 198, 63, 0.15) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+body.theme-dark .service-card:hover::before {
+    opacity: 1;
+}
+
+body.theme-dark .service-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--dk-border-bright);
+    box-shadow:
+        0 24px 50px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(140, 198, 63, 0.08);
+}
+
+body.theme-dark .service-info h3 {
+    color: var(--dk-text);
+}
+
+body.theme-dark .service-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(5, 8, 6, 0.85) 100%);
+    pointer-events: none;
+}
+
+body.theme-dark .service-img {
+    position: relative;
+}
+
+body.theme-dark .read-more {
+    color: #c8d4cc;
+    border-color: var(--dk-border);
+    background: linear-gradient(135deg, rgba(140, 198, 63, 0.06) 0%, transparent 100%);
+}
+
+body.theme-dark .read-more:hover {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #6fa82e 100%);
+    border-color: transparent;
+    box-shadow: 0 4px 16px var(--dk-glow);
+}
+
+/* Advantages — rich forest gradients */
+body.theme-dark .advantage-card {
+    background: var(--dk-green-deep);
+    border: 1px solid var(--dk-border-bright);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+body.theme-dark .advantage-card::before {
+    background:
+        radial-gradient(ellipse 95% 75% at 15% 8%, rgba(60, 180, 110, 0.45) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 90% at 50% 110%, var(--dk-green-mid) 0%, var(--dk-green-deep) 42%, #020503 100%);
+}
+
+body.theme-dark .advantage-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(140, 198, 63, 0.4), transparent);
+    z-index: 3;
+    pointer-events: none;
+}
+
+body.theme-dark .advantage-card:hover {
+    border-color: rgba(160, 220, 90, 0.5);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.55),
+        0 0 60px rgba(140, 198, 63, 0.12);
+}
+
+body.theme-dark .advantage-card h3 {
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-dark .advantage-card p {
+    color: rgba(220, 235, 225, 0.8);
+}
+
+body.theme-dark .advantage-car {
+    mix-blend-mode: lighten;
+    filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
+}
+
+/* Testimonials — glass panels */
+body.theme-dark .google-rating-card,
+body.theme-dark .testimonials-slider {
+    background: linear-gradient(165deg, rgba(22, 29, 24, 0.95) 0%, rgba(14, 18, 16, 0.98) 100%);
+    border: 1px solid var(--dk-border-bright);
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        0 0 80px rgba(140, 198, 63, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+body.theme-dark .google-rating-card {
+    position: relative;
+    overflow: hidden;
+}
+
+body.theme-dark .google-rating-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(140, 198, 63, 0.08) 0%, transparent 45%);
+    pointer-events: none;
+}
+
+body.theme-dark .google-score {
+    background: linear-gradient(180deg, #ffffff 0%, #c8e0d0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.theme-dark .google-brand,
+body.theme-dark .slide-author {
+    color: var(--dk-text);
+}
+
+body.theme-dark .slider-btn {
+    background: linear-gradient(145deg, #1e2822 0%, #141a16 100%);
+    border-color: var(--dk-border-bright);
+    color: var(--dk-text);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-dark .slider-btn:hover {
+    background: linear-gradient(145deg, var(--primary-color) 0%, #6fa82e 100%);
+    box-shadow: 0 4px 20px var(--dk-glow);
+}
+
+body.theme-dark .slider-dot {
+    background: #2a3530;
+}
+
+body.theme-dark .slider-dot.active,
+body.theme-dark .slider-dot:hover {
+    background: linear-gradient(135deg, #a8e055, var(--primary-color));
+    box-shadow: 0 0 12px var(--dk-glow);
+}
+
+body.theme-dark .slide-avatar img {
+    box-shadow: 0 0 0 4px var(--primary-color), 0 8px 32px var(--dk-glow);
+}
+
+/* CTA — premium shine band */
+body.theme-dark .cta-banner {
+    background:
+        linear-gradient(135deg, #4a7a22 0%, var(--primary-color) 35%, #9ad44a 65%, #6fa82e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+body.theme-dark .cta-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.12) 45%, transparent 90%),
+        radial-gradient(ellipse 80% 100% at 0% 50%, rgba(0, 0, 0, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+body.theme-dark .cta-content {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-dark .btn-secondary {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+}
+
+/* Footer */
+body.theme-dark footer {
+    background:
+        linear-gradient(180deg, #030504 0%, #050806 100%);
+    border-top: 1px solid var(--dk-border);
+    position: relative;
+}
+
+body.theme-dark footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(140, 198, 63, 0.35), transparent);
+}
+
+body.theme-dark .footer-social a {
+    background: linear-gradient(145deg, #1a221c 0%, #121814 100%);
+    border: 1px solid var(--dk-border);
+}
+
+body.theme-dark .footer-social a:hover {
+    background: linear-gradient(145deg, var(--primary-color) 0%, #6fa82e 100%);
+    border-color: transparent;
+    box-shadow: 0 4px 16px var(--dk-glow);
+}
+
+body.theme-dark .footer-newsletter input {
+    background: linear-gradient(145deg, #141a16 0%, #0c100e 100%);
+    border: 1px solid var(--dk-border);
+}
+
+body.theme-dark .footer-newsletter input:focus {
+    outline: none;
+    border-color: var(--dk-border-bright);
+    box-shadow: 0 0 0 3px rgba(140, 198, 63, 0.15);
+}
+
+body.theme-dark .footer-bottom {
+    border-top-color: var(--dk-border);
+}
