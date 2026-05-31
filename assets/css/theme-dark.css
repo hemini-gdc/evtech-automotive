@@ -83,8 +83,14 @@ body.theme-dark .dropdown-menu a:hover {
     color: var(--primary-color) !important;
 }
 
-body.theme-dark .location-branches-list .location-branch-card h3 {
+body.theme-dark .location-branch-details h3,
+body.theme-dark .location-branch-meta strong {
     color: var(--dk-text);
+    border-bottom-color: rgba(140, 198, 63, 0.2);
+}
+
+body.theme-dark .location-branch-meta span {
+    color: var(--dk-text-muted);
 }
 
 @media (max-width: 768px) {
@@ -95,7 +101,7 @@ body.theme-dark .location-branches-list .location-branch-card h3 {
 }
 
 /* Hero — cinematic overlay (homepage video hero only) */
-body.theme-dark .hero:not(.hero--location) {
+body.theme-dark .hero:not(.hero--location):not(.hero--services) {
     background: #030504;
 }
 
@@ -103,6 +109,15 @@ body.theme-dark .hero--location {
     background-image:
         linear-gradient(105deg, rgba(5, 12, 8, 0.72) 0%, rgba(5, 12, 8, 0.38) 45%, rgba(3, 8, 5, 0.78) 100%),
         url('../images/locations-hero.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+body.theme-dark .hero--services {
+    background-image:
+        linear-gradient(105deg, rgba(5, 12, 8, 0.72) 0%, rgba(5, 12, 8, 0.38) 45%, rgba(3, 8, 5, 0.78) 100%),
+        url('../images/services-hero.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;

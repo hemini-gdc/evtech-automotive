@@ -32,13 +32,56 @@ function renderCityBranches() {
             : `Find Our ${city.city} Location`;
     }
 
-    container.innerHTML = city.branches.map((branch) => `
-        <article class="service-card location-branch-card" id="${branch.id}">
-            <h3>${branch.name}</h3>
-            <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i>${branch.address}</p>
-            <p class="location-branch-phone"><i class="fas fa-phone-alt" aria-hidden="true"></i>0800 900 911 / 028 056 5656</p>
+    container.innerHTML = city.branches.map((branch, index) => {
+        const reverseClass = index % 2 === 1 ? ' location-branch-row--reverse' : '';
+        const mapQuery = encodeURIComponent(branch.address);
+        const mapSrc = `https://www.google.com/maps?q=${mapQuery}&z=15&hl=en&output=embed`;
+
+        return `
+        <article class="location-branch-row${reverseClass}" id="${branch.id}">
+            <div class="location-branch-row__grid">
+                <div class="location-branch-details service-card">
+                    <h3>${branch.name}</h3>
+                    <ul class="location-branch-meta">
+                        <li>
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            <div>
+                                <strong>Address</strong>
+                                <span>${branch.address}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                            <div>
+                                <strong>Phone</strong>
+                                <span>0800 900 911 / 028 056 5656</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <div>
+                                <strong>Email</strong>
+                                <span>Info@evtech.co.nz</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="location-branch-map">
+                    <iframe
+                        title="Map for ${branch.name}"
+                        src="${mapSrc}"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
         </article>
-    `).join('');
+        `;
+    }).join('');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
