@@ -759,9 +759,21 @@ a.experience-card:hover {
 .all-locations-meta a {
     color: var(--text-light);
     font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 .all-locations-meta a:hover {
+    color: var(--primary-color);
+}
+
+.location-branch-meta a {
+    color: var(--text-light);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.location-branch-meta a:hover {
     color: var(--primary-color);
 }
 

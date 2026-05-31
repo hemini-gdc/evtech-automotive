@@ -1,3 +1,7 @@
+function googleMapsUrl(address) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+}
+
 function renderLocationsMenu() {
     const menu = document.getElementById('locations-menu');
     if (!menu || !window.EVTECH_LOCATIONS) {
@@ -47,7 +51,7 @@ function renderCityBranches() {
                             <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                             <div>
                                 <strong>Address</strong>
-                                <span>${branch.address}</span>
+                                <a href="${googleMapsUrl(branch.address)}" target="_blank" rel="noopener noreferrer">${branch.address}</a>
                             </div>
                         </li>
                         <li>
@@ -99,7 +103,7 @@ function renderAllLocationsDirectory() {
                 <ul class="all-locations-meta">
                     <li>
                         <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                        <span>${branch.address}</span>
+                        <a href="${googleMapsUrl(branch.address)}" target="_blank" rel="noopener noreferrer">${branch.address}</a>
                     </li>
                     <li>
                         <i class="fas fa-phone-alt" aria-hidden="true"></i>

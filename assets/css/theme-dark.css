@@ -267,12 +267,17 @@ body.theme-dark .all-locations-branch h4 {
     color: var(--dk-text);
 }
 
-body.theme-dark .all-locations-meta li,
-body.theme-dark .all-locations-meta a {
+body.theme-dark .all-locations-meta li {
     color: var(--dk-text-muted);
 }
 
-body.theme-dark .all-locations-meta a:hover {
+body.theme-dark .all-locations-meta a,
+body.theme-dark .location-branch-meta a {
+    color: var(--dk-text-muted);
+}
+
+body.theme-dark .all-locations-meta a:hover,
+body.theme-dark .location-branch-meta a:hover {
     color: var(--primary-color);
 }
 
