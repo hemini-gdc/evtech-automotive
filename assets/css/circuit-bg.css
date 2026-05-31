@@ -1,14 +1,16 @@
-/* Homepage animated circuit background */
+/* Homepage — subtle circuit accent (not overwhelming) */
 body.page-home {
     position: relative;
 }
 
 .circuit-bg {
-    position: fixed;
-    inset: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.55;
+    opacity: 0.45;
 }
 
 body.page-home > *:not(.circuit-bg) {
@@ -20,37 +22,37 @@ body.page-home header {
     z-index: 100;
 }
 
-/* Let circuits show through section fills on the homepage */
+/* Sections stay readable — circuits only peek through slightly */
 body.page-home.theme-dark .about,
 body.page-home.theme-dark .services.section-padding,
 body.page-home.theme-dark .advantages,
 body.page-home.theme-dark .testimonials.section-padding {
     background:
-        radial-gradient(ellipse 60% 40% at 0% 50%, rgba(140, 198, 63, 0.05) 0%, transparent 50%),
-        linear-gradient(180deg, rgba(5, 8, 6, 0.9) 0%, rgba(8, 12, 10, 0.92) 100%) !important;
+        radial-gradient(ellipse 60% 40% at 0% 50%, rgba(140, 198, 63, 0.04) 0%, transparent 50%),
+        linear-gradient(180deg, rgba(5, 8, 6, 0.94) 0%, rgba(8, 12, 10, 0.96) 100%) !important;
 }
 
 body.page-home.theme-dark .advantages {
     background:
-        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(20, 90, 55, 0.12) 0%, transparent 55%),
-        linear-gradient(180deg, rgba(6, 9, 8, 0.9) 0%, rgba(3, 5, 4, 0.93) 100%) !important;
+        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(20, 90, 55, 0.1) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(6, 9, 8, 0.94) 0%, rgba(3, 5, 4, 0.96) 100%) !important;
 }
 
 body.page-home.theme-dark .bg-light,
 body.page-home.theme-dark .testimonials.section-padding {
     background:
-        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(140, 198, 63, 0.06) 0%, transparent 50%),
-        linear-gradient(180deg, rgba(10, 14, 12, 0.9) 0%, rgba(6, 9, 8, 0.92) 100%) !important;
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(140, 198, 63, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, rgba(10, 14, 12, 0.94) 0%, rgba(6, 9, 8, 0.96) 100%) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
     .circuit-bg {
-        opacity: 0.35;
+        opacity: 0.3;
     }
 }
 
 @media (max-width: 768px) {
     .circuit-bg {
-        opacity: 0.4;
+        opacity: 0.35;
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Animated PCB-style circuit background for the homepage.
+ * Subtle animated circuit accent for the homepage (sparse, not busy).
  */
 (function initCircuitBackground() {
     const canvas = document.getElementById('circuit-canvas');
@@ -9,8 +9,6 @@
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const ctx = canvas.getContext('2d');
-    const COLOR = { line: 'rgba(140, 198, 63, 0.14)', node: 'rgba(140, 198, 63, 0.35)', pulse: 'rgba(160, 230, 90, 0.95)' };
-
     let width = 0;
     let height = 0;
     let nodes = [];
@@ -22,8 +20,12 @@
         return min + Math.random() * (max - min);
     }
 
+    function pageHeight() {
+        return Math.max(document.documentElement.scrollHeight, window.innerHeight);
+    }
+
     function buildGrid() {
-        const spacing = window.innerWidth < 768 ? 110 : 88;
+        const spacing = window.innerWidth < 768 ? 200 : 260;
         const cols = Math.ceil(width / spacing) + 1;
         const rows = Math.ceil(height / spacing) + 1;
         nodes = [];
@@ -32,102 +34,79 @@
 
         for (let row = 0; row < rows; row += 1) {
             for (let col = 0; col < cols; col += 1) {
-                const jitter = spacing * 0.22;
                 nodes.push({
-                    x: col * spacing + rand(-jitter, jitter),
-                    y: row * spacing + rand(-jitter, jitter),
+                    x: col * spacing + rand(-20, 20),
+                    y: row * spacing + rand(-20, 20),
                     phase: Math.random() * Math.PI * 2,
                 });
             }
         }
 
-        const indexAt = (col, row) => row * cols + col;
+        const at = (c, r) => r * cols + c;
 
         for (let row = 0; row < rows; row += 1) {
             for (let col = 0; col < cols; col += 1) {
-                const from = indexAt(col, row);
-                if (col < cols - 1) {
-                    addEdge(from, indexAt(col + 1, row), Math.random() > 0.08);
+                const from = at(col, row);
+                if (col < cols - 1 && Math.random() > 0.35) {
+                    edges.push(path(nodes[from], nodes[at(col + 1, row)]));
                 }
-                if (row < rows - 1) {
-                    addEdge(from, indexAt(col, row + 1), Math.random() > 0.08);
-                }
-                if (col < cols - 1 && row < rows - 1 && Math.random() > 0.72) {
-                    addEdge(from, indexAt(col + 1, row + 1), false);
+                if (row < rows - 1 && Math.random() > 0.35) {
+                    edges.push(path(nodes[from], nodes[at(col, row + 1)]));
                 }
             }
         }
 
-        edges.forEach((edge, i) => {
-            if (Math.random() > 0.55) {
-                pulses.push({ edgeIndex: i, t: Math.random(), speed: rand(0.0012, 0.0035) });
-            }
-        });
+        const pulseCount = prefersReducedMotion ? 0 : Math.min(5, Math.max(2, Math.floor(edges.length * 0.08)));
+        for (let i = 0; i < pulseCount && edges.length; i += 1) {
+            pulses.push({
+                edgeIndex: Math.floor(Math.random() * edges.length),
+                t: Math.random(),
+                speed: rand(0.0008, 0.0018),
+            });
+        }
     }
 
-    function addEdge(a, b, skip) {
-        if (skip) {
-            return;
-        }
-        const n1 = nodes[a];
-        const n2 = nodes[b];
+    function path(n1, n2) {
         if (!n1 || !n2) {
-            return;
+            return [];
         }
-        edges.push({ a, b, points: orthogonalPath(n1, n2) });
-    }
-
-    function orthogonalPath(n1, n2) {
         if (Math.random() > 0.5) {
-            return [
-                { x: n1.x, y: n1.y },
-                { x: n2.x, y: n1.y },
-                { x: n2.x, y: n2.y },
-            ];
+            return [{ x: n1.x, y: n1.y }, { x: n2.x, y: n1.y }, { x: n2.x, y: n2.y }];
         }
-        return [
-            { x: n1.x, y: n1.y },
-            { x: n1.x, y: n2.y },
-            { x: n2.x, y: n2.y },
-        ];
+        return [{ x: n1.x, y: n1.y }, { x: n1.x, y: n2.y }, { x: n2.x, y: n2.y }];
     }
 
     function resize() {
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
         width = window.innerWidth;
-        height = window.innerHeight;
+        height = pageHeight();
         canvas.width = Math.floor(width * dpr);
         canvas.height = Math.floor(height * dpr);
         canvas.style.width = `${width}px`;
         canvas.style.height = `${height}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         buildGrid();
-        if (prefersReducedMotion) {
-            draw(0);
-        }
+        draw(0);
     }
 
-    function drawPulseOnPath(points, t) {
-        const segments = [];
+    function pointOnPath(points, t) {
         let total = 0;
+        const seg = [];
         for (let i = 0; i < points.length - 1; i += 1) {
-            const dx = points[i + 1].x - points[i].x;
-            const dy = points[i + 1].y - points[i].y;
-            const len = Math.hypot(dx, dy);
-            segments.push({ len, from: points[i], to: points[i + 1] });
+            const len = Math.hypot(points[i + 1].x - points[i].x, points[i + 1].y - points[i].y);
+            seg.push(len);
             total += len;
         }
-        let dist = t * total;
-        for (let i = 0; i < segments.length; i += 1) {
-            if (dist <= segments[i].len) {
-                const seg = segments[i];
-                const ratio = dist / seg.len;
+        let d = ((t % 1) + 1) % 1 * total;
+        for (let i = 0; i < seg.length; i += 1) {
+            if (d <= seg[i]) {
+                const r = d / seg[i];
                 return {
-                    x: seg.from.x + (seg.to.x - seg.from.x) * ratio,
-                    y: seg.from.y + (seg.to.y - seg.from.y) * ratio,
+                    x: points[i].x + (points[i + 1].x - points[i].x) * r,
+                    y: points[i].y + (points[i + 1].y - points[i].y) * r,
                 };
             }
-            dist -= segments[i].len;
+            d -= seg[i];
         }
         return points[points.length - 1];
     }
@@ -135,60 +114,60 @@
     function draw(time) {
         ctx.clearRect(0, 0, width, height);
 
-        edges.forEach((edge) => {
-            const pts = edge.points;
+        edges.forEach((pts) => {
+            if (!pts.length) {
+                return;
+            }
             ctx.beginPath();
             ctx.moveTo(pts[0].x, pts[0].y);
             for (let i = 1; i < pts.length; i += 1) {
                 ctx.lineTo(pts[i].x, pts[i].y);
             }
-            ctx.strokeStyle = COLOR.line;
+            ctx.strokeStyle = 'rgba(140, 198, 63, 0.09)';
             ctx.lineWidth = 1;
             ctx.stroke();
         });
 
         nodes.forEach((node) => {
-            const glow = prefersReducedMotion ? 0.5 : 0.35 + Math.sin(time * 0.002 + node.phase) * 0.25;
+            const a = prefersReducedMotion ? 0.25 : 0.18 + Math.sin(time * 0.0015 + node.phase) * 0.12;
             ctx.beginPath();
-            ctx.arc(node.x, node.y, 2.2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(140, 198, 63, ${glow})`;
+            ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(140, 198, 63, ${a})`;
             ctx.fill();
         });
 
         if (!prefersReducedMotion) {
             pulses.forEach((pulse) => {
-                const edge = edges[pulse.edgeIndex];
-                if (!edge) {
+                const pts = edges[pulse.edgeIndex];
+                if (!pts) {
                     return;
                 }
-                const pos = drawPulseOnPath(edge.points, pulse.t);
-                const grad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 10);
-                grad.addColorStop(0, COLOR.pulse);
-                grad.addColorStop(1, 'rgba(140, 198, 63, 0)');
-                ctx.fillStyle = grad;
+                const pos = pointOnPath(pts, pulse.t);
+                const g = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 8);
+                g.addColorStop(0, 'rgba(160, 230, 90, 0.55)');
+                g.addColorStop(1, 'rgba(140, 198, 63, 0)');
+                ctx.fillStyle = g;
                 ctx.beginPath();
-                ctx.arc(pos.x, pos.y, 10, 0, Math.PI * 2);
+                ctx.arc(pos.x, pos.y, 8, 0, Math.PI * 2);
                 ctx.fill();
             });
         }
     }
 
     function tick(time) {
-        if (!prefersReducedMotion) {
-            pulses.forEach((pulse) => {
-                pulse.t += pulse.speed;
-                if (pulse.t > 1) {
-                    pulse.t = 0;
-                    pulse.speed = rand(0.0012, 0.0035);
-                }
-            });
-            draw(time);
-            animationId = requestAnimationFrame(tick);
-        }
+        pulses.forEach((p) => {
+            p.t += p.speed;
+            if (p.t > 1) {
+                p.t = 0;
+            }
+        });
+        draw(time);
+        animationId = requestAnimationFrame(tick);
     }
 
     resize();
     window.addEventListener('resize', resize);
+    window.addEventListener('load', resize);
 
     if (!prefersReducedMotion) {
         animationId = requestAnimationFrame(tick);
