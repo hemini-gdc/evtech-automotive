@@ -937,31 +937,25 @@ a.experience-card:hover {
     margin: 0;
 }
 
-.advantages-showcase {
+.advantages-showcase--three {
     display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-    gap: 20px;
-    max-width: 1140px;
+    grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 22px;
+    max-width: 1200px;
     margin: 0 auto;
     align-items: stretch;
 }
 
-.advantages-showcase-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    min-height: 100%;
-}
-
 .advantage-card {
     position: relative;
-    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 28px;
     overflow: hidden;
-    min-height: 200px;
-    padding: 32px 28px 0;
-    border: 1px solid rgba(140, 198, 63, 0.35);
-    background: var(--white);
-    box-shadow: var(--shadow);
+    min-height: 440px;
+    border: 1px solid rgba(140, 198, 63, 0.45);
+    background: linear-gradient(155deg, #1a2e14 0%, #0d160f 45%, #050806 100%);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
     opacity: 0;
     transform: translateY(24px);
     transition: opacity 0.5s ease, transform 0.4s ease, border-color 0.35s ease, box-shadow 0.35s ease;
@@ -975,22 +969,8 @@ a.experience-card:hover {
     border-radius: inherit;
     pointer-events: none;
     background:
-        radial-gradient(ellipse 85% 65% at 18% 12%, rgba(140, 198, 63, 0.32) 0%, transparent 52%),
-        radial-gradient(ellipse 110% 95% at 50% 100%, #e4f3d4 0%, #f2fae8 42%, var(--white) 100%);
-}
-
-.advantage-card--hero {
-    min-height: 100%;
-    padding-bottom: 42%;
-}
-
-.advantages-showcase-stack .advantage-card {
-    flex: 1;
-    min-height: 0;
-}
-
-.advantage-card--top-car {
-    padding-top: 38%;
+        radial-gradient(ellipse 90% 70% at 12% 8%, rgba(80, 160, 60, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 100% 80% at 50% 110%, rgba(30, 50, 22, 0.9) 0%, transparent 60%);
 }
 
 .advantage-card.animate-in {
@@ -998,76 +978,124 @@ a.experience-card:hover {
     transform: translateY(0);
 }
 
-.advantage-card--hero.animate-in { transition-delay: 0.05s; }
-.advantages-showcase-stack .advantage-card:nth-child(1).animate-in { transition-delay: 0.12s; }
-.advantages-showcase-stack .advantage-card:nth-child(2).animate-in { transition-delay: 0.2s; }
-.advantages-showcase-stack .advantage-card:nth-child(3).animate-in { transition-delay: 0.28s; }
+.advantage-card--primary.animate-in { transition-delay: 0.05s; }
+.advantage-card--media-top.animate-in { transition-delay: 0.12s; }
+.advantage-card--media-bottom.animate-in { transition-delay: 0.2s; }
 
 .advantage-card:hover {
-    border-color: rgba(140, 198, 63, 0.55);
-    box-shadow: 0 14px 36px rgba(140, 198, 63, 0.18);
+    border-color: rgba(160, 220, 90, 0.55);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45), 0 0 40px rgba(140, 198, 63, 0.1);
     transform: translateY(-3px);
 }
 
 .advantage-card-content {
     position: relative;
     z-index: 2;
-    max-width: 92%;
 }
 
 .advantage-card h3 {
-    font-size: clamp(22px, 2.4vw, 30px);
-    line-height: 1.18;
+    font-size: clamp(22px, 2.2vw, 28px);
+    line-height: 1.2;
     font-weight: 700;
-    color: var(--secondary-color);
+    color: #ffffff;
     margin-bottom: 14px;
     letter-spacing: -0.02em;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
 
-.advantage-card--hero h3 {
-    font-size: clamp(26px, 3vw, 36px);
-    max-width: 14ch;
+.advantage-card--primary h3 {
+    font-size: clamp(26px, 2.8vw, 34px);
+    max-width: 12ch;
 }
 
 .advantage-card p {
     font-size: 15px;
-    line-height: 1.6;
-    color: var(--text-light);
+    line-height: 1.65;
+    color: rgba(220, 235, 225, 0.85);
     margin: 0;
-    max-width: 30ch;
+    max-width: 32ch;
 }
 
-.advantage-car {
+.advantage-card--primary {
+    padding: 36px 32px 0;
+}
+
+.advantage-card--primary .advantage-card-content {
+    max-width: 68%;
+}
+
+.advantage-card-media--bleed {
     position: absolute;
-    left: 50%;
-    bottom: -8%;
-    width: 108%;
+    right: -6%;
+    bottom: -4%;
+    width: 90%;
+    height: 56%;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.advantage-card-media--bleed img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom right;
+    filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.45));
+}
+
+.advantage-card--media-top {
+    padding: 0 28px 32px;
+}
+
+.advantage-card--media-top .advantage-card-media {
+    position: relative;
+    z-index: 1;
+    margin: 0 -28px 20px;
+    flex: 0 0 48%;
+    min-height: 200px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.advantage-card--media-top .advantage-card-media img {
+    width: 118%;
     max-width: none;
     height: auto;
-    transform: translateX(-50%);
+    object-fit: contain;
+    object-position: top center;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
+}
+
+.advantage-card--media-bottom {
+    padding: 32px 28px 0;
+}
+
+.advantage-card--media-bottom .advantage-card-content {
+    flex: 0 0 auto;
+}
+
+.advantage-card--media-bottom .advantage-card-media {
+    position: relative;
+    z-index: 1;
+    margin: auto -28px -6% -28px;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 210px;
+}
+
+.advantage-card--media-bottom .advantage-card-media img {
+    width: 112%;
+    max-width: none;
+    height: auto;
     object-fit: contain;
     object-position: bottom center;
-    pointer-events: none;
-    z-index: 1;
-    mix-blend-mode: multiply;
-    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.1));
-}
-
-.advantage-car--hero {
-    width: 118%;
-    bottom: -12%;
-}
-
-.advantage-car--top {
-    top: -6%;
-    bottom: auto;
-    width: 100%;
-    object-position: top center;
-}
-
-.advantage-card--top-car .advantage-card-content {
-    margin-top: auto;
-    padding-bottom: 28px;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
 }
 
 /* Testimonials */
@@ -1527,19 +1555,23 @@ footer h3::after {
         order: 2;
     }
 
-    .advantages-showcase {
+    .advantages-showcase--three {
         grid-template-columns: 1fr;
-        max-width: 400px;
+        max-width: 480px;
     }
 
-    .advantage-card--hero {
-        min-height: 380px;
-        padding-bottom: 48%;
+    .advantage-card {
+        min-height: 400px;
     }
 
-    .advantage-card--top-car {
-        min-height: 300px;
-        padding-top: 42%;
+    .advantage-card--primary .advantage-card-content {
+        max-width: 100%;
+    }
+
+    .advantage-card-media--bleed {
+        width: 100%;
+        right: 0;
+        height: 50%;
     }
 
     .cta-content {

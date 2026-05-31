@@ -391,9 +391,8 @@ body.theme-dark .advantage-card p {
     color: rgba(220, 235, 225, 0.8);
 }
 
-body.theme-dark .advantage-car {
-    mix-blend-mode: lighten;
-    filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
+body.theme-dark .advantage-card-media img {
+    mix-blend-mode: normal;
 }
 
 /* Testimonials — glass panels */
