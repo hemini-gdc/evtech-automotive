@@ -1,4 +1,59 @@
+function renderLocationsMenu() {
+    const menu = document.getElementById('locations-menu');
+    if (!menu || !window.EVTECH_LOCATIONS) {
+        return;
+    }
+
+    const sorted = [...window.EVTECH_LOCATIONS].sort((a, b) => a.city.localeCompare(b.city));
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+
+    menu.innerHTML = sorted.map((city) => {
+        const isActive = currentPath === city.page;
+        return `<li><a href="${city.page}"${isActive ? ' class="active"' : ''}>${city.city}</a></li>`;
+    }).join('');
+}
+
+function renderCityBranches() {
+    const container = document.getElementById('city-branches-list');
+    if (!container || !window.EVTECH_LOCATIONS) {
+        return;
+    }
+
+    const currentPath = window.location.pathname.split('/').pop() || '';
+    const city = window.EVTECH_LOCATIONS.find((entry) => entry.page === currentPath);
+    if (!city) {
+        return;
+    }
+
+    const sectionTitle = document.getElementById('city-branches-title');
+    if (sectionTitle) {
+        sectionTitle.textContent = city.branches.length > 1
+            ? `Find Our ${city.city} Locations`
+            : `Find Our ${city.city} Location`;
+    }
+
+    container.innerHTML = city.branches.map((branch) => `
+        <article class="service-card location-branch-card" id="${branch.id}">
+            <h3>${branch.name}</h3>
+            <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i>${branch.address}</p>
+            <p class="location-branch-phone"><i class="fas fa-phone-alt" aria-hidden="true"></i>0800 900 911 / 028 056 5656</p>
+        </article>
+    `).join('');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    renderLocationsMenu();
+    renderCityBranches();
+
+    if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+            setTimeout(() => {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 150);
+        }
+    }
+
     const footerMount = document.getElementById('site-footer');
     const existingFooter = document.querySelector('footer');
     if (footerMount || existingFooter) {
