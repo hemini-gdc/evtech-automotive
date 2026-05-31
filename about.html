@@ -46,7 +46,7 @@
                 </ul>
                 <div class="nav-actions">
                     <button class="search-btn"><i class="fas fa-search"></i></button>
-                    <a href="contact.html" class="btn btn-primary">Get A Quote</a>
+                    <a href="contact.html" class="btn btn-primary">Make a Book</a>
                 </div>
                 <div class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -83,10 +83,11 @@
             <div class="about-grid">
                 <div class="about-image">
                     <img src="assets/images/about.png" alt="EVtech Headquarters">
-                    <div class="experience-card">
+                    <a href="#all-locations" class="experience-card experience-card--link"
+                        aria-label="View all EVtech locations in New Zealand">
                         <h3>16+</h3>
                         <p>Locations in NZ</p>
-                    </div>
+                    </a>
                 </div>
                 <div class="about-content">
                     <span class="sub-title">OUR MISSION</span>
@@ -163,14 +164,25 @@
         </div>
     </section>
 
+    <!-- All Locations Directory -->
+    <section id="all-locations" class="all-locations section-padding">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-title">NATIONWIDE NETWORK</span>
+                <h2>Our <span>Locations</span> Across New Zealand</h2>
+                <p>Visit any of our workshops below. Call <a href="tel:0800900911">0800 900 911</a> for bookings and support.</p>
+            </div>
+            <div id="all-locations-list" class="all-locations-directory"></div>
+        </div>
+    </section>
+
     <!-- Contact Banner -->
     <section class="cta-banner">
         <div class="container">
             <div class="cta-content">
                 <h2>Want to Learn More? Get In Touch Today!</h2>
                 <div class="cta-actions">
-                    <a href="tel:0800900911" class="cta-link"><i class="fas fa-phone-alt"></i> 0800 900 911</a>
-                    <a href="contact.html" class="btn btn-secondary">Chat on WhatsApp</a>
+                    <a href="https://wa.me/64800900911" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i> Chat on WhatsApp</a>
                 </div>
             </div>
         </div>

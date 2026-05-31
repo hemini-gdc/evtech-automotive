@@ -248,6 +248,34 @@ body.theme-dark .experience-card {
     box-shadow: 0 12px 40px rgba(140, 198, 63, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
 }
 
+body.theme-dark a.experience-card:hover {
+    box-shadow: 0 16px 48px rgba(140, 198, 63, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+}
+
+body.theme-dark .all-locations-city h3 {
+    color: var(--dk-text);
+    border-bottom-color: var(--dk-border);
+}
+
+body.theme-dark .all-locations-branch {
+    background: linear-gradient(165deg, #161d18 0%, #101612 100%);
+    border: 1px solid var(--dk-border);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.theme-dark .all-locations-branch h4 {
+    color: var(--dk-text);
+}
+
+body.theme-dark .all-locations-meta li,
+body.theme-dark .all-locations-meta a {
+    color: var(--dk-text-muted);
+}
+
+body.theme-dark .all-locations-meta a:hover {
+    color: var(--primary-color);
+}
+
 /* Service cards — gradient border + glass */
 body.theme-dark .service-card {
     background: linear-gradient(165deg, #161d18 0%, #101612 100%);

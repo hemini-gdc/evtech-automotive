@@ -54,7 +54,7 @@ function renderCityBranches() {
                             <i class="fas fa-phone-alt" aria-hidden="true"></i>
                             <div>
                                 <strong>Phone</strong>
-                                <span>0800 900 911 / 028 056 5656</span>
+                                <span>0800 900 911</span>
                             </div>
                         </li>
                         <li>
@@ -84,9 +84,44 @@ function renderCityBranches() {
     }).join('');
 }
 
+function renderAllLocationsDirectory() {
+    const container = document.getElementById('all-locations-list');
+    if (!container || !window.EVTECH_LOCATIONS) {
+        return;
+    }
+
+    const sorted = [...window.EVTECH_LOCATIONS].sort((a, b) => a.city.localeCompare(b.city));
+
+    container.innerHTML = sorted.map((city) => {
+        const branchesHtml = city.branches.map((branch) => `
+            <article class="all-locations-branch">
+                <h4>${branch.name}</h4>
+                <ul class="all-locations-meta">
+                    <li>
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>${branch.address}</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                        <a href="tel:0800900911">0800 900 911</a>
+                    </li>
+                </ul>
+            </article>
+        `).join('');
+
+        return `
+            <div class="all-locations-city">
+                <h3>${city.city}</h3>
+                <div class="all-locations-branches">${branchesHtml}</div>
+            </div>
+        `;
+    }).join('');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     renderLocationsMenu();
     renderCityBranches();
+    renderAllLocationsDirectory();
 
     if (window.location.hash) {
         const target = document.querySelector(window.location.hash);
