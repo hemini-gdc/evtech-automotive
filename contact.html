@@ -19,22 +19,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/theme-dark.css">
+    <link rel="stylesheet" href="assets/css/circuit-bg.css">
     <style>
-        /* Contact Form Styles */
-        .contact-form-container {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 45px;
-        }
-
-        .contact-form-container h3 {
-            font-size: 28px;
-            color: var(--secondary-color);
-            margin-bottom: 30px;
-            font-weight: 700;
-        }
-
+        /* Contact layout (colors in theme-dark.css) */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -52,55 +39,10 @@
             grid-column: span 2;
         }
 
-        .form-group label {
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--secondary-color);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            padding: 15px 20px;
-            border: 2px solid var(--border-color);
-            border-radius: 50px;
-            font-family: inherit;
-            font-size: 15px;
-            transition: var(--transition);
-            outline: none;
-        }
-
-        .form-group textarea {
-            border-radius: 20px;
-            resize: none;
-            height: 120px;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--primary-color);
-        }
-
-        .contact-info-card {
-            background: var(--secondary-color);
-            color: var(--white);
-            padding: 45px;
-            border-radius: var(--border-radius);
-            height: 100%;
-        }
-
-        .contact-info-card h3 {
-            font-size: 28px;
-            color: var(--white);
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
-
         .contact-info-list {
             list-style: none;
             padding: 0;
-            margin: 0 0 35px 0;
+            margin: 0;
         }
 
         .contact-info-list li {
@@ -111,7 +53,6 @@
         }
 
         .contact-info-list i {
-            color: var(--primary-color);
             font-size: 20px;
             margin-top: 3px;
         }
@@ -119,11 +60,9 @@
         .contact-info-list strong {
             display: block;
             font-size: 15px;
-            color: var(--white);
         }
 
         .contact-info-list span {
-            color: #ccc;
             font-size: 14px;
         }
 
@@ -141,7 +80,7 @@
 
 <body class="theme-dark">
 
-
+    <canvas id="circuit-canvas" class="circuit-bg" aria-hidden="true"></canvas>
     <!-- Header / Nav -->
     <header>
         <div class="container">
@@ -200,7 +139,9 @@
                 <!-- Contact Form Card -->
                 <div class="contact-form-container">
                     <h3>Send Us A Message</h3>
-                    <form action="#" method="POST">
+                    <p id="contact-form-status" class="contact-form-status" role="status" aria-live="polite" hidden></p>
+                    <form id="contact-form" method="post" novalidate>
+                        <input type="text" name="_gotcha" class="contact-form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="name">Full Name</label>
@@ -243,9 +184,8 @@
                                     placeholder="Please describe how we can help you..." required></textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary"
-                            style="border: none; padding: 18px 40px; width: 100%; border-radius: 50px;">
-                            Send Request <i class="fas fa-paper-plane" style="margin-left: 8px;"></i>
+                        <button type="submit" class="btn btn-primary contact-submit-btn">
+                            Send Request <i class="fas fa-paper-plane" aria-hidden="true"></i>
                         </button>
                     </form>
                 </div>
@@ -292,7 +232,10 @@
     <div id="site-footer"></div>
 
     <script src="assets/js/locations-data.js"></script>
+    <script src="assets/js/contact-config.js"></script>
+    <script src="assets/js/contact-form.js"></script>
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/circuit-bg.js"></script>
 </body>
 
 </html>
