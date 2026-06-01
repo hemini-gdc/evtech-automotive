@@ -98,6 +98,23 @@ body.theme-dark .location-branch-meta span {
         background: linear-gradient(180deg, #121814 0%, #0a0e0c 100%);
         border-top: 1px solid var(--dk-border);
     }
+
+    body.theme-dark .nav-links a {
+        color: var(--dk-text);
+    }
+
+    body.theme-dark .dropdown-menu {
+        background: linear-gradient(180deg, #161d18 0%, #101612 100%);
+        border: 1px solid var(--dk-border);
+    }
+
+    body.theme-dark .dropdown-menu a {
+        color: var(--dk-text-muted);
+    }
+
+    body.theme-dark .mobile-menu-btn {
+        color: var(--dk-text);
+    }
 }
 
 /* Hero — cinematic overlay (homepage video hero only) */

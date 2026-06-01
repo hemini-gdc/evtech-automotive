@@ -1660,10 +1660,6 @@ footer h3::after {
         display: block;
     }
 
-    .nav-actions {
-        display: none;
-    }
-
     .mobile-menu-btn {
         display: block;
     }

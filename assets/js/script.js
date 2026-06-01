@@ -195,12 +195,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Smooth Scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function onAnchorClick(e) {
+            const href = this.getAttribute('href');
+            if (!href || href === '#') {
+                return;
+            }
+            const target = document.querySelector(href);
+            if (!target) {
+                return;
+            }
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 
