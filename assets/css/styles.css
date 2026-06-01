@@ -156,6 +156,10 @@ header {
     overflow: visible;
 }
 
+header .container {
+    overflow: visible;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -198,6 +202,7 @@ header .btn-primary {
 /* Dropdown Menu */
 .dropdown {
     position: relative;
+    z-index: 1100;
 }
 
 .dropdown-toggle i {
@@ -223,7 +228,7 @@ header .btn-primary {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    z-index: 100;
+    z-index: 1100;
 }
 
 .dropdown-menu::before {
@@ -381,6 +386,7 @@ header .btn-primary {
 
 .nav-links {
     display: flex;
+    overflow: visible;
 }
 
 .nav-links li {
