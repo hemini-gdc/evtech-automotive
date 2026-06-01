@@ -242,12 +242,15 @@ iframe {
 
     .check-list li {
         font-size: 15px;
-        align-items: flex-start;
+        align-items: center;
     }
 
     .check-list i {
-        margin-top: 4px;
         flex-shrink: 0;
+        width: 22px;
+        text-align: center;
+        margin-right: 12px;
+        margin-top: 0;
     }
 
     .section-header {
