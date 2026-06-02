@@ -19,13 +19,11 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/theme-dark.css">
-    <link rel="stylesheet" href="assets/css/circuit-bg.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 
 <body class="theme-dark">
 
-    <canvas id="circuit-canvas" class="circuit-bg" aria-hidden="true"></canvas>
     <!-- Header / Nav -->
     <header>
         <div class="container">
@@ -67,7 +65,8 @@
                     </div>
                     <h1>Leading the Charge in <span>EV Tech</span></h1>
                     <p>We are a dedicated network of certified electrical and mechanical master technicians committed to
-                        driving the future of sustainable automotive engineering across New Zealand.</p>
+                        driving the future of sustainable automotive engineering across New Zealand, with 24/7 specialist
+                        support when you need it.</p>
                     <div class="hero-btns">
                         <a href="services.html" class="btn btn-primary">Our Services</a>
                         <a href="contact.html" class="btn btn-outline-white">Contact Us</a>
@@ -99,11 +98,11 @@
                         high-quality cell replacement, software configuration, and thermal system maintenance, we help
                         clients avoid costly full pack replacements and reduce electronic waste.</p>
 
-                    <ul class="check-list" style="margin-top: 25px;">
-                        <li><i class="fas fa-check"></i> EV Engineering Level 5 Certified Technicians</li>
-                        <li><i class="fas fa-check"></i> 100% compliant high-voltage testing equipment</li>
-                        <li><i class="fas fa-check"></i> Environmentally friendly lithium battery recycling policy</li>
-                        <li><i class="fas fa-check"></i> Friendly expert advice and full SOH certifications</li>
+                    <ul class="check-list check-list--animate" style="margin-top: 25px;">
+                        <li><i class="fas fa-check" aria-hidden="true"></i><span class="check-list__label">EV Engineering Level 5 Certified Technicians</span></li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i><span class="check-list__label">100% compliant high-voltage testing equipment</span></li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i><span class="check-list__label">Environmentally friendly lithium battery recycling policy</span></li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i><span class="check-list__label">Friendly expert advice and full SOH certifications</span></li>
                     </ul>
                 </div>
             </div>
@@ -119,46 +118,31 @@
             </div>
 
             <div class="services-grid services-grid--values">
-                <!-- Value 1 -->
-                <div class="service-card"
-                    style="padding: 40px; box-shadow: var(--shadow); text-align: center; border-radius: var(--border-radius);">
-                    <div class="adv-icon"
-                        style="margin: 0 auto 20px; width: 80px; height: 80px; background: rgba(140, 198, 63, 0.1); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px;">
+                <div class="service-card value-card">
+                    <div class="value-card__icon" aria-hidden="true">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3 style="font-size: 22px; margin-bottom: 15px; color: var(--secondary-color); font-weight: 700;">
-                        Safety First</h3>
-                    <p style="color: var(--text-light); font-size: 15px; line-height: 1.6;">High-voltage systems require
-                        strict safety standards. We enforce comprehensive safety protocols to protect our team, our
-                        customers, and their valuable assets.</p>
+                    <h3 class="value-card__title">Safety First</h3>
+                    <p class="value-card__text">High-voltage systems require strict safety standards. We enforce
+                        comprehensive safety protocols to protect our team, our customers, and their valuable assets.</p>
                 </div>
 
-                <!-- Value 2 -->
-                <div class="service-card"
-                    style="padding: 40px; box-shadow: var(--shadow); text-align: center; border-radius: var(--border-radius);">
-                    <div class="adv-icon"
-                        style="margin: 0 auto 20px; width: 80px; height: 80px; background: rgba(140, 198, 63, 0.1); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px;">
+                <div class="service-card value-card">
+                    <div class="value-card__icon" aria-hidden="true">
                         <i class="fas fa-microchip"></i>
                     </div>
-                    <h3 style="font-size: 22px; margin-bottom: 15px; color: var(--secondary-color); font-weight: 700;">
-                        Innovation</h3>
-                    <p style="color: var(--text-light); font-size: 15px; line-height: 1.6;">EV technology updates
-                        continuously. We invest heavily in software programming suites, battery cell cyclers, and
-                        regular technical upskilling.</p>
+                    <h3 class="value-card__title">Innovation</h3>
+                    <p class="value-card__text">EV technology updates continuously. We invest heavily in software
+                        programming suites, battery cell cyclers, and regular technical upskilling.</p>
                 </div>
 
-                <!-- Value 3 -->
-                <div class="service-card"
-                    style="padding: 40px; box-shadow: var(--shadow); text-align: center; border-radius: var(--border-radius);">
-                    <div class="adv-icon"
-                        style="margin: 0 auto 20px; width: 80px; height: 80px; background: rgba(140, 198, 63, 0.1); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px;">
+                <div class="service-card value-card">
+                    <div class="value-card__icon" aria-hidden="true">
                         <i class="fas fa-leaf"></i>
                     </div>
-                    <h3 style="font-size: 22px; margin-bottom: 15px; color: var(--secondary-color); font-weight: 700;">
-                        Sustainability</h3>
-                    <p style="color: var(--text-light); font-size: 15px; line-height: 1.6;">By repairing rather than
-                        discarding whole battery packs, we keep battery manufacturing resources cycling longer and
-                        minimize carbon footprints.</p>
+                    <h3 class="value-card__title">Sustainability</h3>
+                    <p class="value-card__text">By repairing rather than discarding whole battery packs, we keep battery
+                        manufacturing resources cycling longer and minimize carbon footprints.</p>
                 </div>
             </div>
         </div>
@@ -192,7 +176,6 @@
 
     <script src="assets/js/locations-data.js"></script>
     <script src="assets/js/script.js"></script>
-    <script src="assets/js/circuit-bg.js"></script>
 </body>
 
 </html>

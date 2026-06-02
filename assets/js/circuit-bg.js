@@ -1,10 +1,12 @@
 /**
- * Full-page circuit accents — margins & empty areas only (no hero, no text).
- * Enabled on all body.theme-dark pages.
+ * Animated circuit background — section.advantages (Why Choose Us) only.
+ * Procedural PCB-style traces (orthogonal routing, pads, vias, IC footprints).
  */
 (function initCircuitBackground() {
-    const canvas = document.getElementById('circuit-canvas');
-    if (!canvas || !document.body.classList.contains('theme-dark')) {
+    const section = document.querySelector('section.advantages');
+    const canvas = section?.querySelector('#circuit-canvas');
+
+    if (!section || !canvas || !document.body.classList.contains('theme-dark')) {
         return;
     }
 
@@ -14,102 +16,71 @@
     const LINE_COLOR = '140, 198, 63';
     const PULSE_COLOR = '190, 255, 120';
     const TEXT_PAD = 28;
-    const HERO_PAD = 12;
     const FEATHER = 36;
 
     const TEXT_EXCLUSION_SELECTOR = [
-        'header',
-        'section:not(.hero) .sub-title',
-        'section:not(.hero) h1',
-        'section:not(.hero) h2',
-        'section:not(.hero) h3',
-        'section:not(.hero) h4',
-        'section:not(.hero) p',
-        'section:not(.hero) li',
-        'section:not(.hero) blockquote',
-        'section:not(.hero) cite',
-        'section:not(.hero) .btn',
-        'section:not(.hero) .read-more',
-        'section:not(.hero) .section-header',
-        'section:not(.hero) .advantages-header',
-        'section:not(.hero) .advantage-card-content',
-        'section:not(.hero) .service-info',
-        'section:not(.hero) .google-rating-card',
-        'section:not(.hero) .slide-content',
-        'section:not(.hero) .cta-content',
-        'section:not(.hero) .experience-card',
-        'section:not(.hero) .center-btn',
-        'section:not(.hero) .contact-form-container',
-        'section:not(.hero) .contact-info-card',
-        'section:not(.hero) .location-branch-details',
-        'section:not(.hero) .location-branch-map',
-        'section:not(.hero) .all-locations-directory',
-        'section:not(.hero) .all-locations-city',
-        'section:not(.hero) .legal-wrap',
-        'section:not(.hero) label',
-        'section:not(.hero) input',
-        'section:not(.hero) textarea',
-        'section:not(.hero) select',
-        'footer',
+        '.advantages-header',
+        '.advantages-title',
+        '.advantages-intro',
+        '.advantage-card',
+        '.advantage-card-content',
+        '.advantage-card-media',
     ].join(', ');
+
+    const DIR = {
+        n: { dx: 0, dy: -1 },
+        s: { dx: 0, dy: 1 },
+        e: { dx: 1, dy: 0 },
+        w: { dx: -1, dy: 0 },
+    };
+    const OPPOSITE = { n: 's', s: 'n', e: 'w', w: 'e' };
+    const PERP = {
+        n: ['e', 'w'],
+        s: ['e', 'w'],
+        e: ['n', 's'],
+        w: ['n', 's'],
+    };
 
     let width = 0;
     let height = 0;
-    let docHeight = 0;
     let nodes = [];
     let edges = [];
+    let chips = [];
     let pulses = [];
     let exclusionZones = [];
-    let heroZone = null;
     let animationId = null;
-    let scrollY = 0;
 
     function rand(min, max) {
         return min + Math.random() * (max - min);
     }
 
-    function getDocumentHeight() {
-        return Math.max(
-            document.documentElement.scrollHeight,
-            document.body.scrollHeight,
-            window.innerHeight
-        );
+    function randInt(min, max) {
+        return Math.floor(rand(min, max + 1));
     }
 
-    function rectToDoc(rect, pad) {
+    function snap(v, grid) {
+        return Math.round(v / grid) * grid;
+    }
+
+    function rectToLocal(rect, pad) {
+        const sRect = section.getBoundingClientRect();
         return {
-            left: rect.left - pad,
-            right: rect.right + pad,
-            top: rect.top + scrollY - pad,
-            bottom: rect.bottom + scrollY + pad,
+            left: rect.left - sRect.left - pad,
+            right: rect.right - sRect.left + pad,
+            top: rect.top - sRect.top - pad,
+            bottom: rect.bottom - sRect.top + pad,
         };
     }
 
     function updateExclusionZones() {
-        scrollY = window.scrollY || window.pageYOffset;
         exclusionZones = [];
-        heroZone = null;
 
-        const hero = document.querySelector('section.hero');
-        if (hero) {
-            heroZone = rectToDoc(hero.getBoundingClientRect(), HERO_PAD);
-            exclusionZones.push(heroZone);
-        }
-
-        const cta = document.querySelector('section.cta-banner');
-        if (cta) {
-            exclusionZones.push(rectToDoc(cta.getBoundingClientRect(), HERO_PAD));
-        }
-
-        document.querySelectorAll(TEXT_EXCLUSION_SELECTOR).forEach((el) => {
-            if (!el.getBoundingClientRect) {
-                return;
-            }
+        section.querySelectorAll(TEXT_EXCLUSION_SELECTOR).forEach((el) => {
             const rect = el.getBoundingClientRect();
             if (rect.width < 2 || rect.height < 2) {
                 return;
             }
-            exclusionZones.push(rectToDoc(rect, TEXT_PAD));
+            exclusionZones.push(rectToLocal(rect, TEXT_PAD));
         });
     }
 
@@ -120,6 +91,10 @@
     }
 
     function visibilityAt(x, y) {
+        if (x < 0 || x > width || y < 0 || y > height) {
+            return 0;
+        }
+
         let minDist = Infinity;
 
         for (let i = 0; i < exclusionZones.length; i += 1) {
@@ -151,20 +126,20 @@
     function gridSpacing() {
         const mobile = width < 768;
         return {
-            x: mobile ? 260 : 185,
-            y: mobile ? 300 : 205,
+            x: mobile ? 280 : 200,
+            y: mobile ? 320 : 220,
         };
     }
 
     function gridAnchors() {
         const { x: stepX, y: stepY } = gridSpacing();
         const anchors = [];
-        const offsetX = stepX * 0.3;
-        const offsetY = stepY * 0.22;
+        const offsetX = stepX * 0.28;
+        const offsetY = stepY * 0.2;
 
-        for (let row = 0, y = stepY * 0.35; y < docHeight + stepY; row += 1, y += stepY) {
+        for (let row = 0, y = stepY * 0.4; y < height + stepY; row += 1, y += stepY) {
             const rowShift = (row % 2) * (stepX * 0.5);
-            for (let x = stepX * 0.3 + rowShift; x < width + stepX; x += stepX) {
+            for (let x = stepX * 0.25 + rowShift; x < width + stepX; x += stepX) {
                 const ax = x + rand(-offsetX, offsetX);
                 const ay = y + rand(-offsetY, offsetY);
                 if (isFullyExcluded(ax, ay)) {
@@ -176,72 +151,18 @@
         return anchors;
     }
 
-    function buildPatch(centerX, centerY) {
-        const cols = 4;
-        const rows = 3;
-        const spacing = 48;
-        const startX = centerX - ((cols - 1) * spacing) / 2;
-        const startY = centerY - ((rows - 1) * spacing) / 2;
-        const localNodes = [];
-        const index = [];
-
-        for (let r = 0; r < rows; r += 1) {
-            index[r] = [];
-            for (let c = 0; c < cols; c += 1) {
-                const i = localNodes.length;
-                const nx = startX + c * spacing + rand(-6, 6);
-                const ny = startY + r * spacing + rand(-6, 6);
-                if (isFullyExcluded(nx, ny)) {
-                    index[r][c] = -1;
-                    continue;
-                }
-                localNodes.push({
-                    x: nx,
-                    y: ny,
-                    phase: Math.random() * Math.PI * 2,
-                    cx: centerX,
-                    cy: centerY,
-                });
-                index[r][c] = localNodes.length - 1;
-            }
-        }
-
-        const localEdges = [];
-        const link = (a, b) => {
-            if (a < 0 || b < 0 || !localNodes[a] || !localNodes[b]) {
-                return;
-            }
-            const points = orthPath(localNodes[a], localNodes[b]);
-            if (pointsVisible(points) < 0.08) {
-                return;
-            }
-            localEdges.push({
-                points,
-                cx: centerX,
-                cy: centerY,
-            });
-        };
-
-        for (let r = 0; r < rows; r += 1) {
-            for (let c = 0; c < cols; c += 1) {
-                const idx = index[r][c];
-                if (idx < 0) {
-                    continue;
-                }
-                if (c < cols - 1 && index[r][c + 1] >= 0) {
-                    link(idx, index[r][c + 1]);
-                }
-                if (r < rows - 1 && index[r + 1][c] >= 0) {
-                    link(idx, index[r + 1][c]);
-                }
-            }
-        }
-
-        return { nodes: localNodes, edges: localEdges };
-    }
-
     function orthPath(n1, n2) {
-        if (Math.random() > 0.45) {
+        const dx = n2.x - n1.x;
+        const dy = n2.y - n1.y;
+
+        if (Math.abs(dx) < 3 || Math.abs(dy) < 3) {
+            return [
+                { x: n1.x, y: n1.y },
+                { x: n2.x, y: n2.y },
+            ];
+        }
+
+        if (Math.random() > 0.5) {
             return [
                 { x: n1.x, y: n1.y },
                 { x: n2.x, y: n1.y },
@@ -255,10 +176,236 @@
         ];
     }
 
+    function buildPatch(centerX, centerY) {
+        const mobile = width < 768;
+        const patchW = mobile ? rand(130, 185) : rand(175, 255);
+        const patchH = mobile ? rand(95, 140) : rand(125, 185);
+        const grid = mobile ? 14 : 16;
+        const left = centerX - patchW / 2;
+        const top = centerY - patchH / 2;
+        const right = left + patchW;
+        const bottom = top + patchH;
+
+        const localNodes = [];
+        const localEdges = [];
+        const localChips = [];
+        const nodeMap = new Map();
+        const edgeKeys = new Set();
+
+        function nodeKey(x, y) {
+            return `${snap(x, grid)},${snap(y, grid)}`;
+        }
+
+        function getOrCreateNode(x, y, kind) {
+            const sx = snap(x, grid);
+            const sy = snap(y, grid);
+            if (sx < left || sx > right || sy < top || sy > bottom) {
+                return -1;
+            }
+            if (isFullyExcluded(sx, sy)) {
+                return -1;
+            }
+
+            const key = nodeKey(sx, sy);
+            if (nodeMap.has(key)) {
+                const idx = nodeMap.get(key);
+                if (kind === 'pad' || kind === 'via') {
+                    localNodes[idx].pad = kind;
+                }
+                return idx;
+            }
+
+            const idx = localNodes.length;
+            nodeMap.set(key, idx);
+            localNodes.push({
+                x: sx + rand(-1.2, 1.2),
+                y: sy + rand(-1.2, 1.2),
+                phase: Math.random() * Math.PI * 2,
+                cx: centerX,
+                cy: centerY,
+                pad: kind || 'junction',
+            });
+            return idx;
+        }
+
+        function addEdge(aIdx, bIdx, widthMul) {
+            if (aIdx < 0 || bIdx < 0 || aIdx === bIdx) {
+                return;
+            }
+            const key = aIdx < bIdx ? `${aIdx}-${bIdx}` : `${bIdx}-${aIdx}`;
+            if (edgeKeys.has(key)) {
+                return;
+            }
+
+            const a = localNodes[aIdx];
+            const b = localNodes[bIdx];
+            const points = orthPath(a, b);
+            if (pointsVisible(points) < 0.08) {
+                return;
+            }
+
+            edgeKeys.add(key);
+            localEdges.push({
+                points,
+                cx: centerX,
+                cy: centerY,
+                width: widthMul || 1,
+            });
+        }
+
+        function stepInDirection(x, y, dir, segments) {
+            const vec = DIR[dir];
+            const dist = segments * grid;
+            return {
+                x: x + vec.dx * dist,
+                y: y + vec.dy * dist,
+            };
+        }
+
+        function runTrace(startX, startY, stepCount) {
+            let x = snap(startX, grid);
+            let y = snap(startY, grid);
+            let idx = getOrCreateNode(x, y, 'pad');
+            let lastDir = null;
+
+            for (let s = 0; s < stepCount; s += 1) {
+                const dirs = ['n', 's', 'e', 'w'].filter((d) => d !== OPPOSITE[lastDir]);
+                const dir = dirs[randInt(0, dirs.length - 1)];
+                const segments = randInt(1, 4);
+                const next = stepInDirection(x, y, dir, segments);
+
+                const nextIdx = getOrCreateNode(next.x, next.y, s === stepCount - 1 ? 'pad' : 'junction');
+                if (idx >= 0 && nextIdx >= 0) {
+                    addEdge(idx, nextIdx, lastDir ? 1 : 1.15);
+                }
+
+                if (nextIdx >= 0 && Math.random() < 0.28) {
+                    const branchDir = PERP[dir][randInt(0, 1)];
+                    const branchLen = randInt(1, 3);
+                    const branchEnd = stepInDirection(next.x, next.y, branchDir, branchLen);
+                    const branchIdx = getOrCreateNode(branchEnd.x, branchEnd.y, 'via');
+                    if (branchIdx >= 0) {
+                        addEdge(nextIdx, branchIdx, 0.85);
+                        localNodes[branchIdx].pad = 'via';
+                    }
+                }
+
+                x = snap(next.x, grid);
+                y = snap(next.y, grid);
+                idx = nextIdx;
+                lastDir = dir;
+            }
+        }
+
+        function addBusTrace(startX, startY, dir, length) {
+            let x = snap(startX, grid);
+            let y = snap(startY, grid);
+            let idx = getOrCreateNode(x, y, 'pad');
+            const segments = Math.max(2, Math.floor(length / grid));
+
+            for (let i = 0; i < segments; i += 1) {
+                const next = stepInDirection(x, y, dir, 1);
+                const nextIdx = getOrCreateNode(next.x, next.y, i === segments - 1 ? 'pad' : 'junction');
+                if (idx >= 0 && nextIdx >= 0) {
+                    addEdge(idx, nextIdx, 1.2);
+                }
+
+                if (nextIdx >= 0 && Math.random() < 0.35) {
+                    const spurDir = PERP[dir][randInt(0, 1)];
+                    const spurEnd = stepInDirection(next.x, next.y, spurDir, randInt(1, 2));
+                    const spurIdx = getOrCreateNode(spurEnd.x, spurEnd.y, 'via');
+                    if (spurIdx >= 0) {
+                        addEdge(nextIdx, spurIdx, 0.8);
+                    }
+                }
+
+                x = next.x;
+                y = next.y;
+                idx = nextIdx;
+            }
+        }
+
+        function addChip(cx, cy) {
+            const chipW = rand(28, 42);
+            const chipH = rand(18, 28);
+            if (
+                cx - chipW / 2 < left ||
+                cx + chipW / 2 > right ||
+                cy - chipH / 2 < top ||
+                cy + chipH / 2 > bottom ||
+                isFullyExcluded(cx, cy)
+            ) {
+                return;
+            }
+
+            const chip = {
+                x: cx,
+                y: cy,
+                w: chipW,
+                h: chipH,
+                cx: centerX,
+                cy: centerY,
+                pinIndices: [],
+            };
+
+            const pinOffsets = [
+                { x: -chipW / 2, y: -chipH / 4 },
+                { x: -chipW / 2, y: chipH / 4 },
+                { x: chipW / 2, y: -chipH / 4 },
+                { x: chipW / 2, y: chipH / 4 },
+                { x: 0, y: -chipH / 2 },
+                { x: 0, y: chipH / 2 },
+            ];
+
+            pinOffsets.forEach((off) => {
+                const pinIdx = getOrCreateNode(cx + off.x, cy + off.y, 'pad');
+                if (pinIdx >= 0) {
+                    chip.pinIndices.push(pinIdx);
+                    localNodes[pinIdx].pad = 'pad';
+                }
+            });
+
+            if (chip.pinIndices.length >= 2) {
+                localChips.push(chip);
+                const midIdx = getOrCreateNode(cx, cy, 'junction');
+                chip.pinIndices.forEach((pinIdx) => {
+                    if (midIdx >= 0) {
+                        addEdge(midIdx, pinIdx, 0.75);
+                    }
+                });
+            }
+        }
+
+        const traceCount = mobile ? randInt(3, 5) : randInt(4, 7);
+        for (let t = 0; t < traceCount; t += 1) {
+            runTrace(
+                rand(left + grid * 2, right - grid * 2),
+                rand(top + grid * 2, bottom - grid * 2),
+                randInt(7, 16)
+            );
+        }
+
+        if (Math.random() > 0.25) {
+            addBusTrace(
+                rand(left + grid, right - grid * 3),
+                rand(top + grid, bottom - grid),
+                Math.random() > 0.5 ? 'e' : 's',
+                rand(grid * 4, grid * 8)
+            );
+        }
+
+        if (Math.random() > 0.35) {
+            addChip(centerX + rand(-patchW * 0.2, patchW * 0.2), centerY + rand(-patchH * 0.2, patchH * 0.2));
+        }
+
+        return { nodes: localNodes, edges: localEdges, chips: localChips };
+    }
+
     function buildScene() {
         updateExclusionZones();
         nodes = [];
         edges = [];
+        chips = [];
         pulses = [];
 
         gridAnchors().forEach((anchor) => {
@@ -267,9 +414,16 @@
                 return;
             }
 
+            const nodeOffset = nodes.length;
             const edgeOffset = edges.length;
             patch.nodes.forEach((n) => nodes.push(n));
             patch.edges.forEach((e) => edges.push(e));
+            patch.chips.forEach((c) => {
+                chips.push({
+                    ...c,
+                    pinIndices: c.pinIndices.map((i) => i + nodeOffset),
+                });
+            });
 
             if (!prefersReducedMotion && patch.edges.length) {
                 const pulseCount = width < 768 ? 1 : 2;
@@ -285,11 +439,15 @@
         });
     }
 
+    function sectionInView() {
+        const rect = section.getBoundingClientRect();
+        return rect.bottom > 0 && rect.top < window.innerHeight;
+    }
+
     function resize() {
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        width = window.innerWidth;
-        height = window.innerHeight;
-        docHeight = getDocumentHeight();
+        width = section.clientWidth;
+        height = section.clientHeight;
         canvas.width = Math.floor(width * dpr);
         canvas.height = Math.floor(height * dpr);
         canvas.style.width = `${width}px`;
@@ -303,12 +461,6 @@
         const maxR = width < 768 ? 110 : 125;
         const d = Math.hypot(node.x - node.cx, node.y - node.cy);
         return Math.max(0.65, 1 - (d / maxR) * 0.35);
-    }
-
-    function inViewport(y, margin = 120) {
-        const top = scrollY - margin;
-        const bottom = scrollY + height + margin;
-        return y >= top && y <= bottom;
     }
 
     function pointOnPath(points, t) {
@@ -380,6 +532,7 @@
         ctx.strokeStyle = grad;
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
         ctx.stroke();
 
         const g = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 10);
@@ -392,7 +545,7 @@
         ctx.fill();
     }
 
-    function nearestPulseGlow(node, time) {
+    function nearestPulseGlow(node) {
         if (prefersReducedMotion) {
             return 0;
         }
@@ -411,19 +564,110 @@
         return boost;
     }
 
-    function draw(time) {
-        updateExclusionZones();
-        ctx.clearRect(0, 0, width, height);
+    function drawChip(chip, time) {
+        const vis = visibilityAt(chip.x, chip.y);
+        if (vis < 0.08) {
+            return;
+        }
+
+        const fade = patchFade({ x: chip.x, y: chip.y, cx: chip.cx, cy: chip.cy }) * vis;
+        const pulse = prefersReducedMotion ? 0 : 0.04 * Math.sin(time * 0.0018 + chip.x);
+
         ctx.save();
-        ctx.translate(0, -scrollY);
+        ctx.translate(chip.x, chip.y);
+        ctx.strokeStyle = `rgba(${LINE_COLOR}, ${0.5 * fade})`;
+        ctx.fillStyle = `rgba(8, 14, 10, ${0.85 * fade})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(-chip.w / 2, -chip.h / 2, chip.w, chip.h, 3);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = `rgba(${LINE_COLOR}, ${0.35 * fade})`;
+        ctx.beginPath();
+        ctx.moveTo(-chip.w / 2 + 4, 0);
+        ctx.lineTo(chip.w / 2 - 4, 0);
+        ctx.stroke();
+        ctx.restore();
+
+        chip.pinIndices.forEach((pinIdx) => {
+            const node = nodes[pinIdx];
+            if (node) {
+                node._chipGlow = fade + pulse;
+            }
+        });
+    }
+
+    function drawPad(node, fade, glow, time) {
+        const pad = node.pad || 'junction';
+        const vis = visibilityAt(node.x, node.y);
+        if (vis < 0.08) {
+            return;
+        }
+
+        const f = fade * vis;
+        const chipBoost = node._chipGlow || 0;
+        const pulse = prefersReducedMotion
+            ? 0
+            : 0.12 * Math.sin(time * 0.0022 + node.phase);
+
+        if (pad === 'pad') {
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 4.5, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(12, 18, 14, ${0.9 * f})`;
+            ctx.fill();
+            ctx.strokeStyle = `rgba(${LINE_COLOR}, ${0.55 * f})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${LINE_COLOR}, ${(0.65 + pulse) * f})`;
+            ctx.fill();
+        } else if (pad === 'via') {
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 2.8, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${LINE_COLOR}, ${(0.35 + pulse * 0.5) * f})`;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 1.2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 240, ${(0.5 + glow * 0.4) * f})`;
+            ctx.fill();
+        } else {
+            const base = prefersReducedMotion
+                ? 0.42 * f
+                : (0.32 + Math.sin(time * 0.0022 + node.phase) * 0.14) * f;
+            const a = Math.min(1, base + glow * 0.5 + chipBoost * 0.3);
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 1.8 + glow, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${LINE_COLOR}, ${a})`;
+            ctx.fill();
+        }
+
+        if (glow > 0.35 || chipBoost > 0.2) {
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 6 + glow * 2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${PULSE_COLOR}, ${(glow * 0.45 + chipBoost * 0.25) * f})`;
+            ctx.fill();
+        }
+
+        node._chipGlow = 0;
+    }
+
+    function draw(time) {
+        ctx.clearRect(0, 0, width, height);
+
+        if (!sectionInView()) {
+            return;
+        }
+
+        updateExclusionZones();
+
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
 
         edges.forEach((edge) => {
             const pts = edge.points;
             if (!pts.length) {
-                return;
-            }
-            const midY = pts.reduce((s, p) => s + p.y, 0) / pts.length;
-            if (!inViewport(midY)) {
                 return;
             }
 
@@ -438,19 +682,17 @@
             for (let i = 1; i < pts.length; i += 1) {
                 ctx.lineTo(pts[i].x, pts[i].y);
             }
-            ctx.strokeStyle = `rgba(${LINE_COLOR}, ${0.44 * fade})`;
-            ctx.lineWidth = 1.35;
+            ctx.strokeStyle = `rgba(${LINE_COLOR}, ${0.42 * fade})`;
+            ctx.lineWidth = 1.1 * (edge.width || 1);
             ctx.stroke();
         });
+
+        chips.forEach((chip) => drawChip(chip, time));
 
         if (!prefersReducedMotion) {
             pulses.forEach((pulse) => {
                 const edge = edges[pulse.edgeIndex];
                 if (!edge || !edge.points.length) {
-                    return;
-                }
-                const midY = edge.points.reduce((s, p) => s + p.y, 0) / edge.points.length;
-                if (!inViewport(midY)) {
                     return;
                 }
                 const vis = pointsVisible(edge.points);
@@ -463,37 +705,15 @@
         }
 
         nodes.forEach((node) => {
-            if (!inViewport(node.y)) {
-                return;
-            }
             const vis = visibilityAt(node.x, node.y);
             if (vis < 0.08) {
                 return;
             }
 
             const fade = patchFade(node) * vis;
-            const glow = nearestPulseGlow(node, time);
-            const base = prefersReducedMotion
-                ? 0.48 * fade
-                : (0.4 + Math.sin(time * 0.0022 + node.phase) * 0.16) * fade;
-            const a = Math.min(1, base + glow * 0.6);
-            if (a < 0.04) {
-                return;
-            }
-            const radius = 2 + glow * 1.5;
-            ctx.beginPath();
-            ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${LINE_COLOR}, ${a})`;
-            ctx.fill();
-            if (glow > 0.35) {
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, radius + 4, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${PULSE_COLOR}, ${glow * 0.5})`;
-                ctx.fill();
-            }
+            const glow = nearestPulseGlow(node);
+            drawPad(node, fade, glow, time);
         });
-
-        ctx.restore();
     }
 
     function tick(time) {
@@ -531,19 +751,17 @@
             clearTimeout(rebuildTimer);
         }
         rebuildTimer = setTimeout(() => {
-            docHeight = getDocumentHeight();
-            buildScene();
+            resize();
         }, 120);
     }
 
     resize();
     window.addEventListener('resize', resize);
+    window.addEventListener('scroll', () => draw(performance.now()), { passive: true });
 
     if (typeof ResizeObserver !== 'undefined') {
         const ro = new ResizeObserver(scheduleRebuild);
-        ro.observe(document.body);
-        ro.observe(document.documentElement);
-        document.querySelectorAll('section').forEach((section) => ro.observe(section));
+        ro.observe(section);
     }
 
     if (!prefersReducedMotion) {

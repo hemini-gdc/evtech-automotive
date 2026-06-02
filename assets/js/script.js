@@ -117,6 +117,61 @@ function renderLocationBranchCard(branch) {
             </article>`;
 }
 
+function initCheckListAnimation() {
+    const lists = document.querySelectorAll('.check-list--animate');
+    if (!lists.length) {
+        return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const tickDurationMs = 350;
+    const textDurationMs = 500;
+
+    lists.forEach((list) => {
+        const items = [...list.querySelectorAll('li')];
+
+        if (prefersReducedMotion) {
+            items.forEach((li) => {
+                li.classList.add('tick-in', 'is-revealed');
+            });
+            return;
+        }
+
+        const revealList = () => {
+            let delay = 0;
+
+            items.forEach((li) => {
+                window.setTimeout(() => {
+                    li.classList.add('tick-in');
+                }, delay);
+
+                delay += tickDurationMs;
+
+                window.setTimeout(() => {
+                    li.classList.add('is-revealed');
+                }, delay);
+
+                delay += textDurationMs;
+            });
+        };
+
+        const listObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+                    revealList();
+                    listObserver.unobserve(entry.target);
+                });
+            },
+            { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
+        );
+
+        listObserver.observe(list);
+    });
+}
+
 function renderAllLocationsDirectory() {
     const container = document.getElementById('all-locations-list');
     if (!container || !window.EVTECH_LOCATIONS) {
@@ -127,27 +182,12 @@ function renderAllLocationsDirectory() {
 
     container.innerHTML = sorted.map((city) => {
         const isAuckland = city.city === 'Auckland';
-
-        if (isAuckland && city.branches.length > 4) {
-            const mainBranches = city.branches.slice(0, 4);
-            const extraBranches = city.branches.slice(4);
-
-            return `
-            <div class="all-locations-city all-locations-city--auckland">
-                <h3>${city.city}</h3>
-                <div class="all-locations-branches all-locations-branches--auckland-main">
-                    ${mainBranches.map(renderLocationBranchCard).join('')}
-                </div>
-                <div class="all-locations-branches all-locations-branches--auckland-extra">
-                    ${extraBranches.map(renderLocationBranchCard).join('')}
-                </div>
-            </div>`;
-        }
+        const branchGridClass = city.branches.length > 1 ? ' all-locations-branches--cols-3' : '';
 
         return `
-            <div class="all-locations-city${isAuckland ? ' all-locations-city--auckland' : ''}">
-                <h3>${city.city}</h3>
-                <div class="all-locations-branches">
+            <div class="all-locations-city${isAuckland ? ' all-locations-city--wide' : ''}">
+                <h3 class="all-locations-city-heading">${city.city}</h3>
+                <div class="all-locations-branches${branchGridClass}">
                     ${city.branches.map(renderLocationBranchCard).join('')}
                 </div>
             </div>
@@ -260,6 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.service-card, .advantage-card, .about-content').forEach(el => {
         observer.observe(el);
     });
+
+    initCheckListAnimation();
 
     // Testimonials Slider
     const testimonialsSlider = document.querySelector('.testimonials-slider');

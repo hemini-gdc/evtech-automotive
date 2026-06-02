@@ -100,7 +100,8 @@ iframe {
     }
 
     .hero--location,
-    .hero--services {
+    .hero--services,
+    .hero--contact {
         min-height: 440px;
     }
 
@@ -115,7 +116,8 @@ iframe {
         font-size: 34px;
     }
 
-    .all-locations {
+    .all-locations,
+    #services.services {
         scroll-margin-top: 88px;
     }
 }
@@ -132,18 +134,18 @@ iframe {
     }
 
     nav {
-        height: 76px;
+        height: 88px;
         flex-wrap: nowrap;
         gap: 8px;
     }
 
     header .logo-img {
-        height: 54px;
-        max-height: 54px;
+        height: 76px;
+        max-height: 76px;
     }
 
     .logo {
-        max-height: 76px;
+        max-height: 88px;
         min-width: 0;
     }
 
@@ -179,6 +181,15 @@ iframe {
     .locations-menu {
         max-height: 220px;
         overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .dropdown-menu::-webkit-scrollbar,
+    .locations-menu::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
     }
 
     .hero {
@@ -186,7 +197,8 @@ iframe {
     }
 
     .hero--location,
-    .hero--services {
+    .hero--services,
+    .hero--contact {
         min-height: 0;
         padding: 64px 0 56px;
     }
@@ -346,32 +358,26 @@ iframe {
         padding: 28px 20px;
     }
 
+    .location-branch-row__grid {
+        --location-branch-panel-height: 280px;
+    }
+
     .location-branch-details {
         padding: 24px 20px;
     }
 
-    .location-branch-map iframe {
-        min-height: 260px;
-    }
-
     .all-locations-directory {
-        gap: 28px;
+        gap: 20px 16px;
         margin-top: 32px;
     }
 
     .all-locations-branch {
-        --location-card-width: min(300px, calc(100vw - 48px));
         --location-card-height: 220px;
         padding: 18px 16px;
     }
 
-    .all-locations-branches--auckland-main,
-    .all-locations-branches--auckland-extra {
+    .all-locations-branches--cols-3 {
         grid-template-columns: minmax(0, 1fr);
-    }
-
-    .all-locations-city--auckland .all-locations-branch {
-        max-width: none;
     }
 
     .legal-wrap {
@@ -403,12 +409,12 @@ iframe {
     }
 
     nav {
-        height: 68px;
+        height: 80px;
     }
 
     header .logo-img {
-        height: 48px;
-        max-height: 48px;
+        height: 68px;
+        max-height: 68px;
     }
 
     .nav-actions .btn-primary {
@@ -473,8 +479,8 @@ iframe {
         border-radius: 20px;
     }
 
-    .service-card[style] {
-        padding: 28px 20px !important;
+    .value-card {
+        padding: 28px 20px;
     }
 }
 

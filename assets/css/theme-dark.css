@@ -42,8 +42,8 @@ body.theme-dark header .logo a {
 }
 
 body.theme-dark header .logo-img {
-    height: 72px;
-    max-height: 72px;
+    height: 112px;
+    max-height: 112px;
     width: auto;
     background: transparent;
     object-fit: contain;
@@ -178,7 +178,7 @@ body.theme-dark .location-branch-details.service-card {
 }
 
 /* Hero — cinematic overlay (homepage video hero only) */
-body.theme-dark .hero:not(.hero--location):not(.hero--services) {
+body.theme-dark .hero:not(.hero--location):not(.hero--services):not(.hero--contact) {
     background: #030504;
 }
 
@@ -200,11 +200,20 @@ body.theme-dark .hero--services {
     background-repeat: no-repeat;
 }
 
+body.theme-dark .hero--contact {
+    background-image:
+        linear-gradient(105deg, rgba(5, 12, 8, 0.72) 0%, rgba(5, 12, 8, 0.38) 45%, rgba(3, 8, 5, 0.78) 100%),
+        url('../images/contact-hero.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 body.theme-dark .hero-video-overlay {
     background:
         linear-gradient(105deg, rgba(5, 12, 8, 0.92) 0%, rgba(5, 12, 8, 0.55) 45%, rgba(3, 8, 5, 0.75) 100%),
         radial-gradient(ellipse 70% 80% at 20% 50%, rgba(140, 198, 63, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at 90% 80%, rgba(20, 60, 40, 0.2) 0%, transparent 55%);
+        radial-gradient(ellipse 45% 40% at 100% 100%, rgba(3, 8, 5, 0.85) 0%, transparent 70%);
 }
 
 body.theme-dark .hero-badge {
@@ -260,6 +269,35 @@ body.theme-dark .advantages {
     background:
         radial-gradient(ellipse 90% 60% at 50% 100%, rgba(20, 90, 55, 0.15) 0%, transparent 55%),
         linear-gradient(180deg, #060908 0%, #030504 100%);
+}
+
+/* Section divider — Services ↔ Why Choose Us */
+body.theme-dark section.services + section.advantages {
+    border-top: none;
+}
+
+body.theme-dark section.services + section.advantages::after,
+body.theme-dark section.services + section.bg-light.advantages::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(calc(100% - 48px), var(--container-width));
+    height: 1px;
+    pointer-events: none;
+    z-index: 2;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(140, 198, 63, 0.18) 14%,
+        rgba(140, 198, 63, 0.72) 50%,
+        rgba(140, 198, 63, 0.18) 86%,
+        transparent 100%
+    );
+    box-shadow:
+        0 0 16px rgba(140, 198, 63, 0.22),
+        0 1px 0 rgba(140, 198, 63, 0.08);
 }
 
 /* Section headings — premium accent */
@@ -329,7 +367,7 @@ body.theme-dark a.experience-card:hover {
     box-shadow: 0 16px 48px rgba(140, 198, 63, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
 }
 
-body.theme-dark .all-locations-city h3 {
+body.theme-dark .all-locations-city-heading {
     color: var(--dk-text);
     border-bottom-color: var(--dk-border);
 }
@@ -340,8 +378,23 @@ body.theme-dark .all-locations-branch {
     box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
 }
 
+body.theme-dark .all-locations-branch:hover {
+    background: linear-gradient(165deg, #1c2a18 0%, #141c10 100%);
+    border-color: rgba(140, 198, 63, 0.7);
+    box-shadow:
+        0 20px 44px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(140, 198, 63, 0.4),
+        0 0 36px rgba(140, 198, 63, 0.2);
+    transform: translateY(-6px);
+}
+
+body.theme-dark .all-locations-branch:hover h4 {
+    color: #c8f07a;
+}
+
 body.theme-dark .all-locations-branch h4 {
     color: var(--dk-text);
+    transition: color 0.3s ease;
 }
 
 body.theme-dark .all-locations-meta li {
@@ -366,16 +419,6 @@ body.theme-dark .location-branch-meta a:hover {
 
     100% {
         background-position: 155% 0;
-    }
-}
-
-@keyframes glow-line-ltr-short {
-    0% {
-        background-position: -35% 0;
-    }
-
-    100% {
-        background-position: 135% 0;
     }
 }
 
@@ -420,6 +463,19 @@ body.theme-dark .service-card:hover {
 
 body.theme-dark .service-info h3 {
     color: var(--dk-text);
+}
+
+body.theme-dark .value-card__title {
+    color: var(--dk-text);
+}
+
+body.theme-dark .value-card__text {
+    color: var(--dk-text-muted);
+}
+
+body.theme-dark .value-card__icon {
+    background: rgba(140, 198, 63, 0.15);
+    color: var(--primary-color);
 }
 
 body.theme-dark .service-info {
@@ -475,67 +531,12 @@ body.theme-dark .services-grid .service-card:nth-child(3) .service-divider {
     animation-delay: -1.74s;
 }
 
-/* Advantage cards — short, fast, bright divider sweep */
-body.theme-dark .advantage-card--media-top .advantage-card-content::before,
-body.theme-dark .advantage-card--media-bottom .advantage-card-media::before,
-body.theme-dark .advantage-card--primary .advantage-card-media::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 2px;
-    z-index: 5;
-    pointer-events: none;
-    background-color: rgba(140, 198, 63, 0.08);
-    background-image: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(160, 230, 80, 0.5) 38%,
-        rgba(230, 255, 180, 1) 50%,
-        rgba(160, 230, 80, 0.5) 62%,
-        transparent 100%
-    );
-    background-size: 16% 100%;
-    background-repeat: no-repeat;
-    animation: glow-line-ltr-short 1.35s linear infinite;
-    box-shadow:
-        0 0 4px rgba(200, 255, 120, 1),
-        0 0 10px rgba(140, 198, 63, 0.95),
-        0 0 22px rgba(140, 198, 63, 0.75),
-        0 0 36px rgba(120, 200, 50, 0.45);
-    filter: drop-shadow(0 0 6px rgba(200, 255, 120, 0.9));
-}
-
-body.theme-dark .advantage-card--media-top .advantage-card-content,
-body.theme-dark .advantage-card--media-bottom .advantage-card-media,
-body.theme-dark .advantage-card--primary .advantage-card-media {
-    position: relative;
-}
-
-body.theme-dark .advantages-showcase--three .advantage-card:nth-child(1) .advantage-card-content::before,
-body.theme-dark .advantages-showcase--three .advantage-card:nth-child(1) .advantage-card-media::before {
-    animation-delay: 0s;
-}
-
-body.theme-dark .advantages-showcase--three .advantage-card:nth-child(2) .advantage-card-content::before {
-    animation-delay: -0.45s;
-}
-
-body.theme-dark .advantages-showcase--three .advantage-card:nth-child(3) .advantage-card-media::before {
-    animation-delay: -0.9s;
-}
-
 @media (prefers-reduced-motion: reduce) {
-    body.theme-dark .service-divider,
-    body.theme-dark .advantage-card--media-top .advantage-card-content::before,
-    body.theme-dark .advantage-card--media-bottom .advantage-card-media::before,
-    body.theme-dark .advantage-card--primary .advantage-card-media::before {
+    body.theme-dark .service-divider {
         animation: none;
         background-position: 50% 0;
-        background-size: 16% 100%;
+        background-size: 42% 100%;
         opacity: 0.9;
-        filter: none;
     }
 }
 
@@ -583,7 +584,7 @@ body.theme-dark .advantage-card p {
 }
 
 body.theme-dark .advantage-card-media img {
-    mix-blend-mode: lighten;
+    mix-blend-mode: normal;
 }
 
 /* Testimonials — glass panels */
