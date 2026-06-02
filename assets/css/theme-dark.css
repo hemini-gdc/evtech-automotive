@@ -36,9 +36,18 @@ body.theme-dark header {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(140, 198, 63, 0.06) inset;
 }
 
+body.theme-dark header .logo,
+body.theme-dark header .logo a {
+    background: transparent;
+}
+
 body.theme-dark header .logo-img {
-    height: 80px;
-    max-height: 80px;
+    height: 72px;
+    max-height: 72px;
+    width: auto;
+    background: transparent;
+    object-fit: contain;
+    object-position: left center;
 }
 
 body.theme-dark .nav-links a {
@@ -473,10 +482,6 @@ body.theme-dark .slider-dot.active,
 body.theme-dark .slider-dot:hover {
     background: linear-gradient(135deg, #a8e055, var(--primary-color));
     box-shadow: 0 0 12px var(--dk-glow);
-}
-
-body.theme-dark .slide-avatar img {
-    box-shadow: 0 0 0 4px var(--primary-color), 0 8px 32px var(--dk-glow);
 }
 
 /* CTA — premium shine band */

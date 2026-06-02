@@ -151,8 +151,8 @@
     function gridSpacing() {
         const mobile = width < 768;
         return {
-            x: mobile ? 280 : 200,
-            y: mobile ? 320 : 220,
+            x: mobile ? 260 : 185,
+            y: mobile ? 300 : 205,
         };
     }
 
@@ -302,7 +302,7 @@
     function patchFade(node) {
         const maxR = width < 768 ? 110 : 125;
         const d = Math.hypot(node.x - node.cx, node.y - node.cy);
-        return Math.max(0.45, 1 - (d / maxR) * 0.45);
+        return Math.max(0.65, 1 - (d / maxR) * 0.35);
     }
 
     function inViewport(y, margin = 120) {
@@ -369,8 +369,8 @@
             head.y
         );
         grad.addColorStop(0, `rgba(${PULSE_COLOR}, 0)`);
-        grad.addColorStop(0.55, `rgba(${PULSE_COLOR}, ${0.22 * trailFade})`);
-        grad.addColorStop(1, `rgba(${PULSE_COLOR}, ${0.65 * trailFade})`);
+        grad.addColorStop(0.55, `rgba(${PULSE_COLOR}, ${0.34 * trailFade})`);
+        grad.addColorStop(1, `rgba(${PULSE_COLOR}, ${0.82 * trailFade})`);
 
         ctx.beginPath();
         ctx.moveTo(trailPts[0].x, trailPts[0].y);
@@ -383,8 +383,8 @@
         ctx.stroke();
 
         const g = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 10);
-        g.addColorStop(0, `rgba(255, 255, 240, ${0.85 * trailFade})`);
-        g.addColorStop(0.35, `rgba(${PULSE_COLOR}, ${0.55 * trailFade})`);
+        g.addColorStop(0, `rgba(255, 255, 240, ${0.9 * trailFade})`);
+        g.addColorStop(0.35, `rgba(${PULSE_COLOR}, ${0.6 * trailFade})`);
         g.addColorStop(1, `rgba(${PULSE_COLOR}, 0)`);
         ctx.fillStyle = g;
         ctx.beginPath();
@@ -438,8 +438,8 @@
             for (let i = 1; i < pts.length; i += 1) {
                 ctx.lineTo(pts[i].x, pts[i].y);
             }
-            ctx.strokeStyle = `rgba(${LINE_COLOR}, ${0.26 * fade})`;
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = `rgba(${LINE_COLOR}, ${0.44 * fade})`;
+            ctx.lineWidth = 1.35;
             ctx.stroke();
         });
 
@@ -474,9 +474,9 @@
             const fade = patchFade(node) * vis;
             const glow = nearestPulseGlow(node, time);
             const base = prefersReducedMotion
-                ? 0.38 * fade
-                : (0.28 + Math.sin(time * 0.0022 + node.phase) * 0.12) * fade;
-            const a = Math.min(0.95, base + glow * 0.55);
+                ? 0.48 * fade
+                : (0.4 + Math.sin(time * 0.0022 + node.phase) * 0.16) * fade;
+            const a = Math.min(1, base + glow * 0.6);
             if (a < 0.04) {
                 return;
             }
@@ -488,7 +488,7 @@
             if (glow > 0.35) {
                 ctx.beginPath();
                 ctx.arc(node.x, node.y, radius + 4, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${PULSE_COLOR}, ${glow * 0.35})`;
+                ctx.fillStyle = `rgba(${PULSE_COLOR}, ${glow * 0.5})`;
                 ctx.fill();
             }
         });

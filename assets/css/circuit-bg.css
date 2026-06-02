@@ -6,7 +6,7 @@
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.82;
+    opacity: 1;
 }
 
 /* Sections stack above canvas; tints are translucent so circuits show in gaps & margins */
@@ -23,7 +23,7 @@ body.theme-dark section:not(.hero):not(.cta-banner)::before {
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.86;
+    opacity: 0.72;
     background:
         radial-gradient(ellipse 80% 50% at 50% 0%, rgba(140, 198, 63, 0.05) 0%, transparent 50%),
         linear-gradient(180deg, #0a0e0c 0%, #060908 100%);
@@ -67,7 +67,7 @@ body.theme-dark footer::after {
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.88;
+    opacity: 0.72;
     background: linear-gradient(180deg, #030504 0%, #050806 100%);
 }
 
@@ -78,16 +78,16 @@ body.theme-dark .hero {
 
 @media (prefers-reduced-motion: reduce) {
     .circuit-bg {
-        opacity: 0.55;
+        opacity: 0.75;
     }
 }
 
 @media (max-width: 768px) {
     .circuit-bg {
-        opacity: 0.68;
+        opacity: 0.92;
     }
 
     body.theme-dark section:not(.hero):not(.cta-banner)::before {
-        opacity: 0.9;
+        opacity: 0.76;
     }
 }
