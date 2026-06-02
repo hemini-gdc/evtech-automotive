@@ -360,7 +360,18 @@ iframe {
     }
 
     .all-locations-branch {
+        --location-card-width: min(300px, calc(100vw - 48px));
+        --location-card-height: 220px;
         padding: 18px 16px;
+    }
+
+    .all-locations-branches--auckland-main,
+    .all-locations-branches--auckland-extra {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .all-locations-city--auckland .all-locations-branch {
+        max-width: none;
     }
 
     .legal-wrap {

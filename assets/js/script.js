@@ -70,17 +70,29 @@ function renderCityBranches() {
                         </li>
                     </ul>
                 </div>
-                <div class="location-branch-map">
-                    <iframe
-                        title="Map for ${branch.name}"
-                        src="${mapSrc}"
-                        width="100%"
-                        height="100%"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                <div class="location-branch-map map-embed-dark">
+                    <a
+                        class="location-branch-map-open"
+                        href="${googleMapsUrl(branch.address)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Open ${branch.name} in Google Maps"
+                    >
+                        <span class="location-branch-map-open-label">
+                            Open in Maps <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                        </span>
+                        <iframe
+                            class="map-embed"
+                            title="Map preview for ${branch.name}"
+                            src="${mapSrc}"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            tabindex="-1">
+                        </iframe>
+                    </a>
                 </div>
             </div>
         </article>
@@ -88,16 +100,8 @@ function renderCityBranches() {
     }).join('');
 }
 
-function renderAllLocationsDirectory() {
-    const container = document.getElementById('all-locations-list');
-    if (!container || !window.EVTECH_LOCATIONS) {
-        return;
-    }
-
-    const sorted = [...window.EVTECH_LOCATIONS].sort((a, b) => a.city.localeCompare(b.city));
-
-    container.innerHTML = sorted.map((city) => {
-        const branchesHtml = city.branches.map((branch) => `
+function renderLocationBranchCard(branch) {
+    return `
             <article class="all-locations-branch">
                 <h4>${branch.name}</h4>
                 <ul class="all-locations-meta">
@@ -110,13 +114,42 @@ function renderAllLocationsDirectory() {
                         <a href="tel:0800900911">0800 900 911</a>
                     </li>
                 </ul>
-            </article>
-        `).join('');
+            </article>`;
+}
+
+function renderAllLocationsDirectory() {
+    const container = document.getElementById('all-locations-list');
+    if (!container || !window.EVTECH_LOCATIONS) {
+        return;
+    }
+
+    const sorted = [...window.EVTECH_LOCATIONS].sort((a, b) => a.city.localeCompare(b.city));
+
+    container.innerHTML = sorted.map((city) => {
+        const isAuckland = city.city === 'Auckland';
+
+        if (isAuckland && city.branches.length > 4) {
+            const mainBranches = city.branches.slice(0, 4);
+            const extraBranches = city.branches.slice(4);
+
+            return `
+            <div class="all-locations-city all-locations-city--auckland">
+                <h3>${city.city}</h3>
+                <div class="all-locations-branches all-locations-branches--auckland-main">
+                    ${mainBranches.map(renderLocationBranchCard).join('')}
+                </div>
+                <div class="all-locations-branches all-locations-branches--auckland-extra">
+                    ${extraBranches.map(renderLocationBranchCard).join('')}
+                </div>
+            </div>`;
+        }
 
         return `
-            <div class="all-locations-city">
+            <div class="all-locations-city${isAuckland ? ' all-locations-city--auckland' : ''}">
                 <h3>${city.city}</h3>
-                <div class="all-locations-branches">${branchesHtml}</div>
+                <div class="all-locations-branches">
+                    ${city.branches.map(renderLocationBranchCard).join('')}
+                </div>
             </div>
         `;
     }).join('');

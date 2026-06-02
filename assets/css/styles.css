@@ -384,11 +384,55 @@ header .btn-primary {
     background: #111;
 }
 
+.location-branch-map-open {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.location-branch-map-open:hover .location-branch-map-open-label,
+.location-branch-map-open:focus-visible .location-branch-map-open-label {
+    background: var(--primary-color);
+    color: #0a0e0c;
+    border-color: transparent;
+}
+
+.location-branch-map-open-label {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    border-radius: 999px;
+    background: rgba(10, 14, 12, 0.82);
+    color: #e8f0ea;
+    border: 1px solid rgba(140, 198, 63, 0.45);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.location-branch-map-open-label i {
+    font-size: 12px;
+}
+
 .location-branch-map iframe {
     display: block;
     width: 100%;
     height: 100%;
     min-height: 400px;
+    pointer-events: none;
 }
 
 @media (max-width: 1024px) {
@@ -402,6 +446,10 @@ header .btn-primary {
     }
 
     .location-branch-map {
+        min-height: 320px;
+    }
+
+    .location-branch-map-open {
         min-height: 320px;
     }
 
@@ -744,11 +792,68 @@ a.experience-card:hover {
 
 .all-locations-branches {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
     gap: 20px;
 }
 
+/* Auckland — full width; 4 locations on top row, extras on a second row below */
+.all-locations-city--auckland {
+    grid-column: 1 / -1;
+}
+
+.all-locations-branches--auckland-main {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.all-locations-branches--auckland-extra {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 300px));
+    justify-content: start;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.all-locations-city--auckland .all-locations-branch {
+    width: 100%;
+    max-width: 300px;
+    flex: unset;
+    justify-self: start;
+}
+
+@media (max-width: 1100px) {
+    .all-locations-branches--auckland-main {
+        grid-template-columns: repeat(2, minmax(0, 300px));
+        justify-content: start;
+    }
+}
+
+@media (max-width: 680px) {
+    .all-locations-branches--auckland-main,
+    .all-locations-branches--auckland-extra {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .all-locations-city--auckland .all-locations-branch {
+        max-width: none;
+        justify-self: stretch;
+    }
+}
+
 .all-locations-branch {
+    --location-card-width: 300px;
+    --location-card-height: 220px;
+    box-sizing: border-box;
+    flex: 0 0 var(--location-card-width);
+    width: var(--location-card-width);
+    height: var(--location-card-height);
+    min-height: var(--location-card-height);
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
     background: var(--white);
     border-radius: var(--border-radius);
     padding: 22px 24px;
@@ -756,16 +861,23 @@ a.experience-card:hover {
 }
 
 .all-locations-branch h4 {
-    font-size: 17px;
+    font-size: 16px;
+    line-height: 1.35;
     color: var(--secondary-color);
     margin-bottom: 14px;
     font-weight: 700;
+    min-height: 2.7em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .all-locations-meta {
     list-style: none;
     margin: 0;
     padding: 0;
+    margin-top: auto;
 }
 
 .all-locations-meta li {
@@ -883,6 +995,10 @@ a.experience-card:hover {
 
 .service-img {
     overflow: hidden;
+}
+
+.service-divider {
+    display: none;
 }
 
 .service-img img {
