@@ -1,7 +1,55 @@
 /**
  * Contact page — send enquiries to the client inbox (see contact-config.js).
  */
+function suburbFromAddress(address) {
+    const parts = address.split(',').map((part) => part.trim());
+    if (parts.length >= 3) {
+        return parts[1];
+    }
+    if (parts.length >= 2) {
+        return parts[0];
+    }
+    return '';
+}
+
+function populateContactLocationSelect() {
+    const select = document.getElementById('location');
+    if (!select || !window.EVTECH_LOCATIONS) {
+        return;
+    }
+
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = 'Select preferred workshop';
+    placeholder.disabled = true;
+    placeholder.selected = true;
+
+    const sorted = [...window.EVTECH_LOCATIONS].sort((a, b) => a.city.localeCompare(b.city));
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(placeholder);
+
+    sorted.forEach((city) => {
+        const group = document.createElement('optgroup');
+        group.label = city.city;
+
+        city.branches.forEach((branch) => {
+            const suburb = suburbFromAddress(branch.address);
+            const label = suburb ? `${branch.name} — ${suburb}` : branch.name;
+            const option = document.createElement('option');
+            option.value = `${city.city}: ${label}`;
+            option.textContent = label;
+            group.appendChild(option);
+        });
+
+        fragment.appendChild(group);
+    });
+
+    select.replaceChildren(fragment);
+}
+
 (function initContactForm() {
+    populateContactLocationSelect();
+
     const form = document.getElementById('contact-form');
     if (!form) {
         return;
