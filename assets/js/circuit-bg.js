@@ -15,6 +15,7 @@
 
     const LINE_COLOR = '140, 198, 63';
     const PULSE_COLOR = '190, 255, 120';
+    const CIRCUIT_INTENSITY = 0.55;
     const TEXT_PAD = 28;
     const FEATHER = 36;
 
@@ -126,8 +127,8 @@
     function gridSpacing() {
         const mobile = width < 768;
         return {
-            x: mobile ? 280 : 200,
-            y: mobile ? 320 : 220,
+            x: mobile ? 340 : 280,
+            y: mobile ? 380 : 300,
         };
     }
 
@@ -426,7 +427,7 @@
             });
 
             if (!prefersReducedMotion && patch.edges.length) {
-                const pulseCount = width < 768 ? 1 : 2;
+                const pulseCount = width < 768 ? 1 : 1;
                 for (let p = 0; p < pulseCount; p += 1) {
                     pulses.push({
                         edgeIndex: edgeOffset + Math.floor(Math.random() * patch.edges.length),
@@ -521,8 +522,8 @@
             head.y
         );
         grad.addColorStop(0, `rgba(${PULSE_COLOR}, 0)`);
-        grad.addColorStop(0.55, `rgba(${PULSE_COLOR}, ${0.34 * trailFade})`);
-        grad.addColorStop(1, `rgba(${PULSE_COLOR}, ${0.82 * trailFade})`);
+        grad.addColorStop(0.55, `rgba(${PULSE_COLOR}, ${0.34 * trailFade * CIRCUIT_INTENSITY})`);
+        grad.addColorStop(1, `rgba(${PULSE_COLOR}, ${0.82 * trailFade * CIRCUIT_INTENSITY})`);
 
         ctx.beginPath();
         ctx.moveTo(trailPts[0].x, trailPts[0].y);
@@ -536,8 +537,8 @@
         ctx.stroke();
 
         const g = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 10);
-        g.addColorStop(0, `rgba(255, 255, 240, ${0.9 * trailFade})`);
-        g.addColorStop(0.35, `rgba(${PULSE_COLOR}, ${0.6 * trailFade})`);
+        g.addColorStop(0, `rgba(255, 255, 240, ${0.9 * trailFade * CIRCUIT_INTENSITY})`);
+        g.addColorStop(0.35, `rgba(${PULSE_COLOR}, ${0.6 * trailFade * CIRCUIT_INTENSITY})`);
         g.addColorStop(1, `rgba(${PULSE_COLOR}, 0)`);
         ctx.fillStyle = g;
         ctx.beginPath();
@@ -605,11 +606,11 @@
             return;
         }
 
-        const f = fade * vis;
+        const f = fade * vis * CIRCUIT_INTENSITY;
         const chipBoost = node._chipGlow || 0;
         const pulse = prefersReducedMotion
             ? 0
-            : 0.12 * Math.sin(time * 0.0022 + node.phase);
+            : 0.08 * Math.sin(time * 0.0022 + node.phase);
 
         if (pad === 'pad') {
             ctx.beginPath();
@@ -643,10 +644,10 @@
             ctx.fill();
         }
 
-        if (glow > 0.35 || chipBoost > 0.2) {
+        if (glow > 0.5 || chipBoost > 0.35) {
             ctx.beginPath();
-            ctx.arc(node.x, node.y, 6 + glow * 2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${PULSE_COLOR}, ${(glow * 0.45 + chipBoost * 0.25) * f})`;
+            ctx.arc(node.x, node.y, 4 + glow, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${PULSE_COLOR}, ${(glow * 0.3 + chipBoost * 0.15) * f})`;
             ctx.fill();
         }
 
@@ -682,8 +683,8 @@
             for (let i = 1; i < pts.length; i += 1) {
                 ctx.lineTo(pts[i].x, pts[i].y);
             }
-            ctx.strokeStyle = `rgba(${LINE_COLOR}, ${0.42 * fade})`;
-            ctx.lineWidth = 1.1 * (edge.width || 1);
+            ctx.strokeStyle = `rgba(${LINE_COLOR}, ${0.42 * fade * CIRCUIT_INTENSITY})`;
+            ctx.lineWidth = 1 * (edge.width || 1);
             ctx.stroke();
         });
 

@@ -495,7 +495,7 @@ body.theme-dark .service-img::after {
     z-index: 1;
 }
 
-/* One glowing divider per service card (image ↔ text) */
+/* One glowing divider per service card (image ↔ text) — animates on hover only */
 body.theme-dark .service-divider {
     display: block;
     width: 100%;
@@ -515,24 +515,32 @@ body.theme-dark .service-divider {
     );
     background-size: 42% 100%;
     background-repeat: no-repeat;
+    background-position: -55% 0;
+    animation: none;
+    box-shadow: none;
+    transition: box-shadow 0.3s ease;
+}
+
+body.theme-dark .service-card:hover .service-divider {
     animation: glow-line-ltr 2.6s linear infinite;
     box-shadow: 0 0 6px rgba(140, 198, 63, 0.25);
 }
 
-body.theme-dark .services-grid .service-card:nth-child(1) .service-divider {
+body.theme-dark .services-grid .service-card:nth-child(1):hover .service-divider {
     animation-delay: 0s;
 }
 
-body.theme-dark .services-grid .service-card:nth-child(2) .service-divider {
+body.theme-dark .services-grid .service-card:nth-child(2):hover .service-divider {
     animation-delay: -0.87s;
 }
 
-body.theme-dark .services-grid .service-card:nth-child(3) .service-divider {
+body.theme-dark .services-grid .service-card:nth-child(3):hover .service-divider {
     animation-delay: -1.74s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    body.theme-dark .service-divider {
+    body.theme-dark .service-divider,
+    body.theme-dark .service-card:hover .service-divider {
         animation: none;
         background-position: 50% 0;
         background-size: 42% 100%;
