@@ -147,20 +147,24 @@
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="name">Full Name</label>
-                                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                                <input type="text" id="name" name="name" placeholder="Your Name" required
+                                    minlength="2" maxlength="100" autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                                <input type="email" id="email" name="email" placeholder="Your Email" required
+                                    maxlength="254" autocomplete="email" inputmode="email">
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
+                                <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required
+                                    minlength="8" maxlength="20" autocomplete="tel" inputmode="tel">
                             </div>
                             <div class="form-group">
                                 <label for="vehicle">Vehicle Make & Model</label>
                                 <input type="text" id="vehicle" name="vehicle"
-                                    placeholder="e.g. Nissan Leaf 2018 / Tesla Model 3" required>
+                                    placeholder="e.g. Nissan Leaf 2018 / Tesla Model 3" required
+                                    minlength="3" maxlength="120">
                             </div>
                             <div class="form-group">
                                 <label for="location">Preferred Location</label>
@@ -181,7 +185,8 @@
                             <div class="form-group full-width">
                                 <label for="message">Your Message</label>
                                 <textarea id="message" name="message"
-                                    placeholder="Please describe how we can help you..." required></textarea>
+                                    placeholder="Please describe how we can help you..." required
+                                    minlength="10" maxlength="2000" rows="5"></textarea>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary contact-submit-btn">
