@@ -345,8 +345,8 @@ iframe {
         gap: 32px;
     }
 
-    .footer-about .logo-img {
-        width: min(220px, 70vw);
+    .footer-about .logo {
+        display: none;
     }
 
     .footer-newsletter {
