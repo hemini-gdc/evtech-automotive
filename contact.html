@@ -96,7 +96,10 @@
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About Us</a></li>
-                    <li><a href="services.html">Services</a></li>
+                    <li class="dropdown">
+                        <a href="services.html" class="dropdown-toggle">Services <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu services-menu" id="services-menu"></ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle">Locations <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu locations-menu" id="locations-menu"></ul>
@@ -158,7 +161,7 @@
                             <div class="form-group">
                                 <label for="phone">Phone Number</label>
                                 <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required
-                                    minlength="8" maxlength="20" autocomplete="tel" inputmode="tel">
+                                    maxlength="20" autocomplete="tel" inputmode="tel">
                             </div>
                             <div class="form-group">
                                 <label for="vehicle">Vehicle Make & Model</label>
@@ -237,6 +240,7 @@
     <div id="site-footer"></div>
 
     <script src="assets/js/locations-data.js"></script>
+    <script src="assets/js/services-data.js"></script>
     <script src="assets/js/contact-config.js"></script>
     <script src="assets/js/contact-form.js"></script>
     <script src="assets/js/script.js"></script>

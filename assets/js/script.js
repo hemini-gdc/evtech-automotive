@@ -17,6 +17,22 @@ function renderLocationsMenu() {
     }).join('');
 }
 
+function renderServicesMenu() {
+    const menu = document.getElementById('services-menu');
+    if (!menu || !window.EVTECH_SERVICES) {
+        return;
+    }
+
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const hash = window.location.hash;
+
+    menu.innerHTML = window.EVTECH_SERVICES.map((service) => {
+        const href = `services.html#${service.id}`;
+        const isActive = currentPath === 'services.html' && hash === `#${service.id}`;
+        return `<li><a href="${href}"${isActive ? ' class="active"' : ''}>${service.name}</a></li>`;
+    }).join('');
+}
+
 function renderCityBranches() {
     const container = document.getElementById('city-branches-list');
     if (!container || !window.EVTECH_LOCATIONS) {
@@ -197,6 +213,7 @@ function renderAllLocationsDirectory() {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderLocationsMenu();
+    renderServicesMenu();
     renderCityBranches();
     renderAllLocationsDirectory();
 

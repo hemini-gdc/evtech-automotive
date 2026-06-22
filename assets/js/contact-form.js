@@ -53,6 +53,50 @@ function phoneDigits(value) {
     return String(value || '').replace(/\D/g, '');
 }
 
+function normalizeNzPhoneDigits(value) {
+    let digits = phoneDigits(value);
+
+    if (digits.startsWith('0064')) {
+        digits = digits.slice(4);
+    } else if (digits.startsWith('64')) {
+        digits = digits.slice(2);
+    }
+
+    if (digits.length > 0 && !digits.startsWith('0')) {
+        digits = `0${digits}`;
+    }
+
+    return digits;
+}
+
+function validateNzPhone(value) {
+    const raw = String(value || '').trim();
+
+    if (!raw) {
+        return 'Please enter your phone number.';
+    }
+
+    if (!/^[\d\s+\-().]+$/.test(raw)) {
+        return 'Phone number can only include digits, spaces, and + ( ) -';
+    }
+
+    const digits = normalizeNzPhoneDigits(raw);
+
+    if (!digits.startsWith('0')) {
+        return 'Enter a NZ number starting with 0 or +64.';
+    }
+
+    const tollFree = /^0800\d{7}$|^0508\d{7}$/.test(digits);
+    const mobile = /^02[0-9]\d{7,8}$/.test(digits);
+    const landline = /^0[34679]\d{7,8}$/.test(digits);
+
+    if (tollFree || mobile || landline) {
+        return '';
+    }
+
+    return 'Please enter a valid New Zealand phone number.';
+}
+
 function validateContactField(name, rawValue) {
     const value = String(rawValue ?? '').trim();
 
@@ -81,16 +125,8 @@ function validateContactField(name, rawValue) {
             }
             return '';
 
-        case 'phone': {
-            if (!value) {
-                return 'Please enter your phone number.';
-            }
-            const digits = phoneDigits(value);
-            if (digits.length < 8 || digits.length > 15) {
-                return 'Please enter a valid phone number (at least 8 digits).';
-            }
-            return '';
-        }
+        case 'phone':
+            return validateNzPhone(value);
 
         case 'vehicle':
             if (!value) {

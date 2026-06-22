@@ -36,7 +36,10 @@
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About Us</a></li>
-                    <li><a href="services.html" class="active">Services</a></li>
+                    <li class="dropdown">
+                        <a href="services.html" class="dropdown-toggle active">Services <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu services-menu" id="services-menu"></ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle">Locations <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu locations-menu" id="locations-menu"></ul>
@@ -84,7 +87,7 @@
 
             <div class="services-grid services-grid--catalog">
                 <!-- Service 1 -->
-                <div class="service-card" style="box-shadow: var(--shadow);">
+                <div class="service-card" id="battery-health" style="box-shadow: var(--shadow);">
                     <div class="service-img">
                         <img src="assets/images/service-battery-health.jpg" alt="EV battery health diagnostic">
                     </div>
@@ -104,7 +107,7 @@
                 </div>
 
                 <!-- Service 2 -->
-                <div class="service-card" style="box-shadow: var(--shadow);">
+                <div class="service-card" id="ecu-programming" style="box-shadow: var(--shadow);">
                     <div class="service-img">
                         <img src="assets/images/service-ecu-programming.jpg" alt="EV ECU programming">
                     </div>
@@ -124,7 +127,7 @@
                 </div>
 
                 <!-- Service 3 -->
-                <div class="service-card" style="box-shadow: var(--shadow);">
+                <div class="service-card" id="remote-diagnostics" style="box-shadow: var(--shadow);">
                     <div class="service-img">
                         <img src="assets/images/service-remote-diagnostics.jpg" alt="EV remote diagnostics">
                     </div>
@@ -144,7 +147,7 @@
                 </div>
 
                 <!-- Service 4 -->
-                <div class="service-card" style="box-shadow: var(--shadow);">
+                <div class="service-card" id="cell-balancing" style="box-shadow: var(--shadow);">
                     <div class="service-img">
                         <img src="assets/images/service-cell-balancing.jpg" alt="EV battery cell balancing">
                     </div>
@@ -164,7 +167,7 @@
                 </div>
 
                 <!-- Service 5 -->
-                <div class="service-card" style="box-shadow: var(--shadow);">
+                <div class="service-card" id="cooling-maintenance" style="box-shadow: var(--shadow);">
                     <div class="service-img">
                         <img src="assets/images/service-cooling.jpg" alt="EV cooling system maintenance">
                     </div>
@@ -184,7 +187,7 @@
                 </div>
 
                 <!-- Service 6 -->
-                <div class="service-card" style="box-shadow: var(--shadow);">
+                <div class="service-card" id="hv-safety" style="box-shadow: var(--shadow);">
                     <div class="service-img">
                         <img src="assets/images/service-hv-safety.jpg" alt="EV high voltage safety inspection">
                     </div>
@@ -222,6 +225,7 @@
     <div id="site-footer"></div>
 
     <script src="assets/js/locations-data.js"></script>
+    <script src="assets/js/services-data.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 
