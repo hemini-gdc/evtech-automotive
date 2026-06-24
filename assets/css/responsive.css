@@ -34,6 +34,12 @@ h2 {
     grid-template-columns: 1.15fr 0.85fr;
     gap: 50px;
     align-items: start;
+    min-width: 0;
+}
+
+.about-grid--contact > * {
+    min-width: 0;
+    max-width: 100%;
 }
 
 .services-grid--values .service-card,
@@ -172,26 +178,19 @@ iframe {
         left: 0;
         right: 0;
         width: 100%;
-        max-height: min(70vh, 520px);
+        max-height: min(85vh, 640px);
         overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
     }
 
     .dropdown-menu,
     .locations-menu,
     .services-menu {
-        max-height: 220px;
-        overflow-y: auto;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-
-    .dropdown-menu::-webkit-scrollbar,
-    .locations-menu::-webkit-scrollbar,
-    .services-menu::-webkit-scrollbar {
-        display: none;
-        width: 0;
-        height: 0;
+        max-height: none;
+        overflow: visible;
     }
 
     .hero {
@@ -357,7 +356,35 @@ iframe {
 
     body.theme-dark .contact-form-container,
     body.theme-dark .contact-info-card {
-        padding: 28px 20px;
+        padding: 24px 16px;
+    }
+
+    body.theme-dark .contact-form-container h3,
+    body.theme-dark .contact-info-card h3 {
+        font-size: clamp(1.35rem, 5vw, 1.75rem);
+        margin-bottom: 20px;
+    }
+
+    body.theme-dark .contact-form-container .form-group input,
+    body.theme-dark .contact-form-container .form-group select,
+    body.theme-dark .contact-form-container .form-group textarea {
+        padding: 14px 16px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    body.theme-dark .contact-form-container .form-group select {
+        padding-right: 40px;
+        background-position: right 14px center;
+    }
+
+    body.theme-dark .contact-form-container .form-group textarea {
+        border-radius: 12px;
+        min-height: 140px;
+    }
+
+    body.theme-dark .contact-form-container .contact-submit-btn {
+        padding: 16px 24px;
     }
 
     .location-branch-row__grid {

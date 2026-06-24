@@ -278,7 +278,34 @@ document.addEventListener('DOMContentLoaded', () => {
             toggle.addEventListener('click', (e) => {
                 if (window.innerWidth <= 768) {
                     e.preventDefault();
+                    const isOpening = !dropdown.classList.contains('active');
+
+                    dropdowns.forEach((other) => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+
                     dropdown.classList.toggle('active');
+
+                    if (isOpening && navLinks) {
+                        requestAnimationFrame(() => {
+                            const menu = dropdown.querySelector('.dropdown-menu');
+                            if (!menu) {
+                                return;
+                            }
+
+                            const menuRect = menu.getBoundingClientRect();
+                            const navRect = navLinks.getBoundingClientRect();
+
+                            if (menuRect.bottom > navRect.bottom - 12) {
+                                navLinks.scrollBy({
+                                    top: menuRect.bottom - navRect.bottom + 24,
+                                    behavior: 'smooth',
+                                });
+                            }
+                        });
+                    }
                 }
             });
         }

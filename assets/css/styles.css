@@ -1918,6 +1918,8 @@ footer h3::after {
         margin-top: 10px;
         padding-left: 0;
         text-align: center;
+        max-height: none;
+        overflow: visible;
     }
 
     .dropdown-menu::before {

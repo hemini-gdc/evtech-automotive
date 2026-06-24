@@ -738,6 +738,17 @@ body.theme-dark .contact-form-container {
         0 10px 40px rgba(0, 0, 0, 0.45),
         0 0 0 1px rgba(255, 255, 255, 0.03) inset;
     padding: 45px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+}
+
+body.theme-dark .contact-form-container form,
+body.theme-dark .contact-form-container .form-grid,
+body.theme-dark .contact-form-container .form-group {
+    min-width: 0;
+    max-width: 100%;
 }
 
 body.theme-dark .contact-form-container h3 {
@@ -756,6 +767,10 @@ body.theme-dark .contact-form-container .form-group label {
 body.theme-dark .contact-form-container .form-group input,
 body.theme-dark .contact-form-container .form-group select,
 body.theme-dark .contact-form-container .form-group textarea {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: block;
     padding: 15px 20px;
     background: linear-gradient(145deg, #141a16 0%, #0c100e 100%);
     border: 1px solid var(--dk-border);
@@ -776,6 +791,9 @@ body.theme-dark .contact-form-container .form-group select {
     background-position: right 18px center;
     background-size: 12px 8px;
     color-scheme: dark;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 body.theme-dark .contact-form-container .form-group select option {
